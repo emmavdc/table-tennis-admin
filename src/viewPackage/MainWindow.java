@@ -1,13 +1,13 @@
 package viewPackage;
 
+import controllerPackage.ApplicationController;
 import exceptionPackage.*;
 import modelPackage.Affiliate;
 import viewPackage.Affiliate.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class MainWindow extends JFrame {
 
@@ -22,6 +22,7 @@ public class MainWindow extends JFrame {
     private TrainingGroupDateSelectionPanel trainingGroupDateSelectionPanel;
     private AvailableWeekPanel availableWeekPanel;
     private AbsenteeismRatePanel absenteeismRatePanel;
+    private ApplicationController applicationController;
 
     private JMenuBar menuBar;
     private JMenu affiliateMenu, helpMenu, affiliateSearchesMenu;
@@ -36,7 +37,10 @@ public class MainWindow extends JFrame {
         super("Table Tennis Club Administration");
         setSize(1024, 768);
         setLocationRelativeTo(null); //null=center
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //close when click the x
+
+        // Closing app
+        applicationController = new ApplicationController();
+        this.addWindowListener(new ClosingListener());
 
         //Screen parts
         headerPanel = new HeaderPanel();
@@ -85,7 +89,6 @@ public class MainWindow extends JFrame {
         affiliateMenu.add(affiliateSearchesMenu);
         affiliateMenu.addSeparator();
 
-
         search1 = new JMenuItem("Affiliates according a training group");
         affiliateSearchesMenu.add(search1);
         search1.addActionListener(new Search1Listener());
@@ -103,12 +106,10 @@ public class MainWindow extends JFrame {
         affiliateMenu.add(absenteeismRate);
         affiliateMenu.addSeparator();
 
-
         affiliateExit = new JMenuItem("Exit");
         affiliateExit.setMnemonic('X');
         affiliateExit.addActionListener(new ExitListener());
         affiliateMenu.add(affiliateExit);
-
 
         //Menu:Help
         helpMenu = new JMenu("Help");
@@ -168,6 +169,22 @@ public class MainWindow extends JFrame {
     private class ExitListener implements ActionListener {
         public void actionPerformed (ActionEvent event)
         {
+            try {
+                applicationController.closingApplication();
+            } catch (CloseApplicationException e) {
+                e.printStackTrace();
+            }
+            System.exit(0);
+        }
+    }
+
+    private class ClosingListener extends WindowAdapter {
+        public void windowClosing(WindowEvent event){
+            try {
+                applicationController.closingApplication();
+            } catch (CloseApplicationException e) {
+                e.printStackTrace();
+            }
             System.exit(0);
         }
     }

@@ -42,6 +42,7 @@ public class AffiliatePanel extends JPanel {
 
         formatingHelper = new Formating();
 
+        // vertical and horizontal padding
         this.setBorder(new EmptyBorder(20, 30, 20, 30));
         this.setLayout(new GridLayout(27, 2, 2, 5));
 

@@ -207,6 +207,7 @@ public class AffiliateRankingDialog extends JDialog {
     private void refreshAffiliateData() throws RankingAccessException {
         affiliate. setAffiliateRankings(rankingController.getRankingsByAffiliateId(affiliate.getAffiliateID()));
         rankingsDialogModel.setContents(mapAffiliateRankingsToRankingSeason(affiliate.getAffiliateRankings()));
+        // notify to redraw data
         rankingsDialogModel.fireTableDataChanged();
     }
 

@@ -1,5 +1,7 @@
 package dataAccessPackage;
 
+import exceptionPackage.CloseApplicationException;
+
 import java.sql.*;
 
 public class SingletonConnection {
@@ -13,7 +15,17 @@ public class SingletonConnection {
             uniqueConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tabletennisclub?serverTimezone=Europe/Paris", "root", "MyPass");
 
         }
-
         return uniqueConnection;
+    }
+
+    // close connection
+    public void closeConnection() throws CloseApplicationException {
+        try{
+            uniqueConnection.close();
+            uniqueConnection = null;
+        }
+        catch (SQLException e){
+            throw new CloseApplicationException();
+        }
     }
 }
