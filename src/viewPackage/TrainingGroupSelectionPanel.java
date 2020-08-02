@@ -20,7 +20,7 @@ public class TrainingGroupSelectionPanel extends JPanel {
     private SearchesController searchesController;
     private MainWindow parent;
     private AllAffiliatesTrainingModel model;
-    private JLabel trainingGroupLabel, titleLabel, seasonLabel;
+    private JLabel trainingGroupLabel, titleLabel, seasonLabel, trainingGroupValidationLabel;
     private JButton selectButton, closeButton;
     private JComboBox trainingGroupComboBox;
     private JTable table;
@@ -69,6 +69,11 @@ public class TrainingGroupSelectionPanel extends JPanel {
         } catch (TrainingAccessException e) {
             e.printStackTrace();
         }
+
+        trainingGroupValidationLabel = new JLabel("");
+        trainingGroupValidationLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        trainingGroupValidationLabel.setForeground(Color.RED);
+        comboPanel.add(trainingGroupValidationLabel);
 
         selectButton = new JButton("Select");
         selectButton.addActionListener(new SelectListener());
@@ -132,22 +137,26 @@ public class TrainingGroupSelectionPanel extends JPanel {
 
             TrainingGroup trainingGroup = (TrainingGroup) trainingGroupComboBox.getSelectedItem();
 
-            // obtain current Year
-            Calendar c = Calendar.getInstance();
-            int currentYear  = c.get(Calendar.YEAR);
-            int currentMonth = c.get(Calendar.MONTH) + 1;
-            int currentSeason;
-            // new table tennis season begins in SEPTEMBER !
-            if(currentMonth < Calendar.SEPTEMBER) currentSeason = currentYear - 1;
-            else currentSeason = currentYear;
-
-            try {
-                model.setContents(searchesController.getAllAffiliatesInTraining(trainingGroup.getTrainingGroupID(),currentSeason));
-                model.fireTableDataChanged();
-            } catch (SearchAccessException searchAccessException) {
-                searchAccessException.printStackTrace();
+            if(trainingGroup == null){
+                trainingGroupValidationLabel.setText("please choose a training group !!!");
             }
+            else{
+                // obtain current Year
+                Calendar c = Calendar.getInstance();
+                int currentYear  = c.get(Calendar.YEAR);
+                int currentMonth = c.get(Calendar.MONTH);
+                int currentSeason;
+                // new table tennis season begins in SEPTEMBER !
+                if(currentMonth < Calendar.SEPTEMBER) currentSeason = currentYear - 1;
+                else currentSeason = currentYear;
 
+                try {
+                    model.setContents(searchesController.getAllAffiliatesInTraining(trainingGroup.getTrainingGroupID(),currentSeason));
+                    model.fireTableDataChanged();
+                } catch (SearchAccessException searchAccessException) {
+                    searchAccessException.printStackTrace();
+                }
+            }
         }
     }
 

@@ -7,7 +7,7 @@ import modelPackage.Absence;
 
 import java.util.ArrayList;
 
-public class AbsenceController {
+public class  AbsenceController {
 
     private AbsenceManager absenceManager;
 

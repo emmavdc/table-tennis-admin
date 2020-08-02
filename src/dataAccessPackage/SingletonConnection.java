@@ -8,6 +8,8 @@ public class SingletonConnection {
 
     private static Connection uniqueConnection;
 
+    private SingletonConnection(){};
+
     public static Connection getInstance() throws SQLException {
 
         if(uniqueConnection == null){
@@ -19,7 +21,7 @@ public class SingletonConnection {
     }
 
     // close connection
-    public void closeConnection() throws CloseApplicationException {
+    public static void closeConnection() throws CloseApplicationException {
         try{
             uniqueConnection.close();
             uniqueConnection = null;

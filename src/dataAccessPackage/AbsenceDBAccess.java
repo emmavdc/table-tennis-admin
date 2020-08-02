@@ -1,6 +1,7 @@
 package dataAccessPackage;
 
 import exceptionPackage.AbsenceAccessException;
+import exceptionPackage.CloseApplicationException;
 import modelPackage.Absence;
 
 import java.sql.*;
@@ -27,6 +28,7 @@ public class AbsenceDBAccess implements AbsenceDataAccess{
 
             }
             return allAbsences;
+
 
         }
 

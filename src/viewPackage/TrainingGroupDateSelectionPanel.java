@@ -26,7 +26,7 @@ public class TrainingGroupDateSelectionPanel extends JPanel {
     private SearchesController searchesController;
     private MainWindow parent;
     private AllAffiliatesTrainingDateModel model;
-    private JLabel trainingGroupLabel, startDateLabel, endDateLabel, dateValidationLabel, titleLabel, seasonLabel;
+    private JLabel trainingGroupLabel, startDateLabel, endDateLabel, dateValidationLabel, titleLabel, seasonLabel, trainingGroupValidationLabel;
     private JButton selectButton, closeButton;
     private JComboBox trainingGroupComboBox;
     private JTable table;
@@ -111,6 +111,10 @@ public class TrainingGroupDateSelectionPanel extends JPanel {
             e.printStackTrace();
         }
 
+        trainingGroupValidationLabel = new JLabel("");
+        trainingGroupValidationLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        trainingGroupValidationLabel.setForeground(Color.RED);
+        comboPanel.add(trainingGroupValidationLabel);
 
         selectButton = new JButton("Select");
         selectButton.addActionListener(new SelectListener());
@@ -188,18 +192,13 @@ public class TrainingGroupDateSelectionPanel extends JPanel {
                 gregorianStartDate = null;
                 gregorianEndDate = null;
             }
+            TrainingGroup trainingGroup = (TrainingGroup) trainingGroupComboBox.getSelectedItem();
 
-            if(gregorianStartDate == null || gregorianEndDate == null){
-
-                dateValidationLabel.setText("Wrong Date Format !!!");
-            }
-            else {
-
-                TrainingGroup trainingGroup = (TrainingGroup) trainingGroupComboBox.getSelectedItem();
+            if(gregorianStartDate != null && gregorianEndDate != null && trainingGroup != null){
 
                 Calendar c = Calendar.getInstance();
                 int currentYear = c.get(Calendar.YEAR);
-                int currentMonth = c.get(Calendar.MONTH) + 1;
+                int currentMonth = c.get(Calendar.MONTH);
                 int currentSeason;
                 // new table tennis season begins in SEPTEMBER !
                 if (currentMonth < Calendar.SEPTEMBER) currentSeason = currentYear - 1;
@@ -212,7 +211,10 @@ public class TrainingGroupDateSelectionPanel extends JPanel {
                     searchAccessException.printStackTrace();
                 }
             }
-
+            else {
+                if(gregorianStartDate == null || gregorianEndDate == null) dateValidationLabel.setText("Wrong Date Format !!!");
+                if(trainingGroup == null) trainingGroupValidationLabel.setText("please select a training group!!");
+            }
         }
     }
 

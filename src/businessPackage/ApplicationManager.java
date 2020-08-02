@@ -4,13 +4,10 @@ import dataAccessPackage.SingletonConnection;
 import exceptionPackage.CloseApplicationException;
 
 public class ApplicationManager {
-    private  SingletonConnection uniqueConnection;
 
-    public ApplicationManager(){
-        uniqueConnection = new SingletonConnection();
-    }
+    public ApplicationManager(){}
 
     public void closingApplication() throws CloseApplicationException {
-        uniqueConnection.closeConnection();
+        SingletonConnection.closeConnection();
     }
 }
