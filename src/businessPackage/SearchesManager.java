@@ -1,6 +1,7 @@
 package businessPackage;
 
 import dataAccessPackage.SearchesDBAccess;
+import dataAccessPackage.SearchesDataAccess;
 import exceptionPackage.SearchAccessException;
 import modelPackage.AffiliateAvailableWeek;
 import modelPackage.AffiliateInTraining;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 
 public class SearchesManager {
 
-    private SearchesDBAccess searchesDao;
+    private SearchesDataAccess searchesDao;
 
 
     public  SearchesManager(){

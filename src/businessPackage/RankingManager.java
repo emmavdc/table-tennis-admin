@@ -1,6 +1,7 @@
 package businessPackage;
 
 import dataAccessPackage.RankingDBAccess;
+import dataAccessPackage.RankingDataAccess;
 import exceptionPackage.RankingAccessException;
 import modelPackage.AffiliateRanking;
 import modelPackage.Ranking;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 
 public class RankingManager {
 
-    private RankingDBAccess rankingDao;
+    private RankingDataAccess rankingDao;
 
     public RankingManager(){
         rankingDao = new RankingDBAccess();

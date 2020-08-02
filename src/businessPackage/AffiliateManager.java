@@ -2,6 +2,7 @@ package businessPackage;
 
 
 import dataAccessPackage.AffiliateDBAccess;
+import dataAccessPackage.AffiliateDataAccess;
 import exceptionPackage.AbsenceAccessException;
 import exceptionPackage.AffiliateAccessException;
 import exceptionPackage.RankingAccessException;
@@ -12,7 +13,7 @@ import java.util.Calendar;
 
 public class AffiliateManager {
 
-    private AffiliateDBAccess affiliateDAO;
+    private AffiliateDataAccess affiliateDAO;
     private EmailValidator emailValidator;
     private PhoneValidator phoneValidator;
     private NameValidator nameValidator;

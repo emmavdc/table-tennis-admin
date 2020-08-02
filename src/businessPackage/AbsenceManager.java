@@ -1,7 +1,9 @@
 package businessPackage;
 
 import dataAccessPackage.AbsenceDBAccess;
+import dataAccessPackage.AbsenceDataAccess;
 import dataAccessPackage.AffiliateDBAccess;
+import dataAccessPackage.AffiliateDataAccess;
 import exceptionPackage.AbsenceAccessException;
 import exceptionPackage.AffiliateAccessException;
 import modelPackage.Absence;
@@ -11,8 +13,8 @@ import java.util.ArrayList;
 
 public class AbsenceManager {
 
-    private AbsenceDBAccess absenceDao;
-    private AffiliateDBAccess affiliateDao;
+    private AbsenceDataAccess absenceDao;
+    private AffiliateDataAccess affiliateDao;
 
 
     public AbsenceManager(){

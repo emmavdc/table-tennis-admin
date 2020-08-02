@@ -1,16 +1,17 @@
 package businessPackage;
 
 import dataAccessPackage.EquipmentDBAccess;
+import dataAccessPackage.EquipmentDataAccess;
 import exceptionPackage.EquipmentAccessException;
 import modelPackage.Equipment;
 
 import java.util.ArrayList;
 
 public class EquipmentManager {
-    private EquipmentDBAccess equipmentDAO;
+    private EquipmentDataAccess equipmentDAO;
 
     public EquipmentManager(){
-        this.equipmentDAO = new EquipmentDBAccess();
+        equipmentDAO = new EquipmentDBAccess();
     }
 
     public ArrayList<Equipment> getAllEquipments() throws EquipmentAccessException {
