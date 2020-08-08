@@ -5,6 +5,7 @@ import controllerPackage.TrainingController;
 import exceptionPackage.EquipmentAccessException;
 import exceptionPackage.TrainingAccessException;
 import modelPackage.*;
+import utils.Constants;
 import utils.Formating;
 
 import javax.swing.*;
@@ -275,8 +276,9 @@ public class AffiliatePanel extends JPanel {
                 selectedGender, gregorianBirthDate,
                 playCompetitionCheckBox.isSelected(), selectedEquipment);
 
-        affiliate.setPhone(phone.getText());
-        affiliate.setEmail(email.getText());
+        if(!(phone.getText().equals(Constants.EMPTY_STRING))) affiliate.setPhone(phone.getText());
+        if(!(email.getText().equals(Constants.EMPTY_STRING))) affiliate.setEmail(email.getText());
+
 
         affiliate.setTrainings(new ArrayList<Training>());
 

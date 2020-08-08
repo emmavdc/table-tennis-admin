@@ -75,7 +75,7 @@ public class AffiliateManager {
         if(!(nameValidator.validate(affiliate.getLastName()))){
             validationResult.add(new ValidationResult("LASTNAME", "Lastname must contain alphabetic characters"));
         }
-        if(affiliate.getPhone().length() != 0){
+        if(affiliate.getPhone() != null && affiliate.getPhone().length() != 0){
 
             if(affiliate.getPhone().length() >= 15){
                 validationResult.add(new ValidationResult("PHONE", "Phone should be < 15 digits !"));
@@ -86,7 +86,7 @@ public class AffiliateManager {
                 }
             }
         }
-        if(affiliate.getEmail().length() != 0){
+        if( affiliate.getEmail() != null && affiliate.getEmail().length() != 0){
             if(!(emailValidator.validate(affiliate.getEmail()))){
                 validationResult.add(new ValidationResult("EMAIL", "Wrong email format"));
             }
