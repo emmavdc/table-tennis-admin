@@ -4,6 +4,7 @@ import controllerPackage.AbsenceController;
 import exceptionPackage.AbsenceAccessException;
 import modelPackage.Absence;
 import modelPackage.Affiliate;
+import utils.Constants;
 import utils.Formating;
 
 import javax.swing.*;
@@ -201,7 +202,7 @@ public class AffiliateAbsenceDialog extends JDialog {
         centerPanel.add(week22);
 
         // empty row
-        centerPanel.add(new JLabel(""));
+        centerPanel.add(new JLabel(Constants.EMPTY_STRING));
 
         setAbsenceText();
 

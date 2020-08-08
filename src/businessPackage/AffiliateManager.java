@@ -8,6 +8,8 @@ import exceptionPackage.AffiliateAccessException;
 import exceptionPackage.RankingAccessException;
 import modelPackage.Affiliate;
 import modelPackage.ValidationResult;
+import utils.Constants;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -67,51 +69,51 @@ public class AffiliateManager {
         ArrayList<ValidationResult> validationResult = new ArrayList<ValidationResult>();
 
         if (affiliate.getAffiliateID() <= 0 || affiliate.getAffiliateID() > 9999999) {
-            validationResult.add(new ValidationResult("AFFILIATEID", "Affiliate Id should be between 1 and 9999999!"));
+            validationResult.add(new ValidationResult(Constants.AFFILIATEID, "Affiliate Id should be between 1 and 9999999!"));
         }
         if(!(nameValidator.validate(affiliate.getFirstName()))){
-            validationResult.add(new ValidationResult("FIRSTNAME", "FirstName must contain alphabetic characters"));
+            validationResult.add(new ValidationResult(Constants.FIRSTNAME, "FirstName must contain alphabetic characters"));
         }
         if(!(nameValidator.validate(affiliate.getLastName()))){
-            validationResult.add(new ValidationResult("LASTNAME", "Lastname must contain alphabetic characters"));
+            validationResult.add(new ValidationResult(Constants.LASTNAME, "Lastname must contain alphabetic characters"));
         }
         if(affiliate.getPhone() != null && affiliate.getPhone().length() != 0){
 
             if(affiliate.getPhone().length() >= 15){
-                validationResult.add(new ValidationResult("PHONE", "Phone should be < 15 digits !"));
+                validationResult.add(new ValidationResult(Constants.PHONE, "Phone should be < 15 digits !"));
             }
             else {
                 if(!(phoneValidator.validate(affiliate.getPhone()))){
-                    validationResult.add(new ValidationResult("PHONE", "Wrong phone format"));
+                    validationResult.add(new ValidationResult(Constants.PHONE, "Wrong phone format"));
                 }
             }
         }
         if( affiliate.getEmail() != null && affiliate.getEmail().length() != 0){
             if(!(emailValidator.validate(affiliate.getEmail()))){
-                validationResult.add(new ValidationResult("EMAIL", "Wrong email format"));
+                validationResult.add(new ValidationResult(Constants.EMAIL, "Wrong email format"));
             }
         }
 
         if(affiliate.getBirthDate() == null) {
-            validationResult.add(new ValidationResult("BIRTHDATE", "Wrong birthdate format"));
+            validationResult.add(new ValidationResult(Constants.BIRTHDATE, "Wrong birthdate format"));
         }
         else{
             if(affiliate.getBirthDate().get(Calendar.YEAR) <= 1900 || affiliate.getBirthDate().get(Calendar.YEAR) > year){
-                validationResult.add(new ValidationResult("BIRTHDATE", "birthDate should be >1900 and < " + year));
+                validationResult.add(new ValidationResult(Constants.BIRTHDATE, "birthDate should be >1900 and < " + year));
             }
         }
 
         if(affiliate.getTrainings().size() == 2) {
             if (affiliate.getTrainings().get(0).getTrainingGroupId().intValue()
                     == affiliate.getTrainings().get(1).getTrainingGroupId().intValue()) {
-                validationResult.add(new ValidationResult("TRAININGS", "The second training day should be different!"));
+                validationResult.add(new ValidationResult(Constants.TRAININGS, "The second training day should be different!"));
             }
         }
         if (affiliate.getGender().isEmpty()) {
-            validationResult.add(new ValidationResult("GENDER", "Select a gender!"));
+            validationResult.add(new ValidationResult(Constants.GENDER, "Select a gender!"));
         }
         if (affiliate.getEquipment() == null) {
-            validationResult.add(new ValidationResult("EQUIPMENT", "Select an equipment!"));
+            validationResult.add(new ValidationResult(Constants.EQUIPMENT, "Select an equipment!"));
         }
         return validationResult;
     }

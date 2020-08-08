@@ -7,6 +7,7 @@ import exceptionPackage.TrainingAccessException;
 import modelPackage.AffiliateInTrainingBirthDate;
 import modelPackage.AllAffiliatesTrainingDateModel;
 import modelPackage.TrainingGroup;
+import utils.Constants;
 import utils.Formating;
 
 import javax.swing.*;
@@ -91,7 +92,7 @@ public class TrainingGroupDateSelectionPanel extends JPanel {
         endDateFormatted = new JFormattedTextField(endDateMask);
         comboPanel.add(endDateFormatted);
 
-        dateValidationLabel = new JLabel("");
+        dateValidationLabel = new JLabel(Constants.EMPTY_STRING);
         dateValidationLabel.setHorizontalAlignment(SwingConstants.LEFT);
         dateValidationLabel.setForeground(Color.RED);
         comboPanel.add(dateValidationLabel);
@@ -111,7 +112,7 @@ public class TrainingGroupDateSelectionPanel extends JPanel {
             e.printStackTrace();
         }
 
-        trainingGroupValidationLabel = new JLabel("");
+        trainingGroupValidationLabel = new JLabel(Constants.EMPTY_STRING);
         trainingGroupValidationLabel.setHorizontalAlignment(SwingConstants.LEFT);
         trainingGroupValidationLabel.setForeground(Color.RED);
         comboPanel.add(trainingGroupValidationLabel);
@@ -123,8 +124,8 @@ public class TrainingGroupDateSelectionPanel extends JPanel {
 
         // third fourth and fifth row in the top panel
         topPanel.add(comboPanel);
-        topPanel.add(new JLabel(""));
-        topPanel.add(new JLabel(""));
+        topPanel.add(new JLabel(Constants.EMPTY_STRING));
+        topPanel.add(new JLabel(Constants.EMPTY_STRING));
 
 
         add(topPanel, BorderLayout.NORTH);
@@ -155,8 +156,8 @@ public class TrainingGroupDateSelectionPanel extends JPanel {
         trainingGroupComboBox.setSelectedIndex(-1);
         model.setContents(new ArrayList<AffiliateInTrainingBirthDate>());
         model.fireTableDataChanged();
-        startDateFormatted.setText("");
-        endDateFormatted.setText("");
+        startDateFormatted.setText(Constants.EMPTY_STRING);
+        endDateFormatted.setText(Constants.EMPTY_STRING);
     }
 
     private void setCurrentSeason(){
@@ -178,7 +179,7 @@ public class TrainingGroupDateSelectionPanel extends JPanel {
 
             startDate = startDateFormatted.getText();
             endDate = endDateFormatted.getText();
-            dateValidationLabel.setText("");
+            dateValidationLabel.setText(Constants.EMPTY_STRING);
 
             GregorianCalendar gregorianStartDate;
             GregorianCalendar gregorianEndDate;

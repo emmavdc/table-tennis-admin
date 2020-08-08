@@ -5,6 +5,7 @@ import controllerPackage.TrainingController;
 import exceptionPackage.SearchAccessException;
 import exceptionPackage.TrainingAccessException;
 import modelPackage.*;
+import utils.Constants;
 import utils.Formating;
 
 import javax.swing.*;
@@ -70,7 +71,7 @@ public class TrainingGroupSelectionPanel extends JPanel {
             e.printStackTrace();
         }
 
-        trainingGroupValidationLabel = new JLabel("");
+        trainingGroupValidationLabel = new JLabel(Constants.EMPTY_STRING);
         trainingGroupValidationLabel.setHorizontalAlignment(SwingConstants.LEFT);
         trainingGroupValidationLabel.setForeground(Color.RED);
         comboPanel.add(trainingGroupValidationLabel);
@@ -82,8 +83,8 @@ public class TrainingGroupSelectionPanel extends JPanel {
 
         // third fourth and fifth row in the top panel
         topPanel.add(comboPanel);
-        topPanel.add(new JLabel(""));
-        topPanel.add(new JLabel(""));
+        topPanel.add(new JLabel(Constants.EMPTY_STRING));
+        topPanel.add(new JLabel(Constants.EMPTY_STRING));
 
 
         add(topPanel, BorderLayout.NORTH);

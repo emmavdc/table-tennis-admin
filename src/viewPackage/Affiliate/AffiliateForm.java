@@ -4,6 +4,7 @@ import controllerPackage.AffiliateController;
 import exceptionPackage.*;
 import modelPackage.Affiliate;
 import modelPackage.ValidationResult;
+import utils.Constants;
 import viewPackage.MainWindow;
 
 import javax.swing.*;
@@ -60,7 +61,7 @@ public class AffiliateForm extends JPanel {
 
         try {
 
-            String messageFeedback = "";
+            String messageFeedback = Constants.EMPTY_STRING;
             ArrayList<ValidationResult> validationResults = null;
 
             Affiliate affiliate = affiliatePanel.getAffiliate();

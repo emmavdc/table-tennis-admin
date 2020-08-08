@@ -51,7 +51,7 @@ public class AffiliatePanel extends JPanel {
         formatingHelper.formatTitleLabel(modeLabel);
 
         this.add(modeLabel);
-        this.add(new JLabel(""));
+        this.add(new JLabel(Constants.EMPTY_STRING));
 
         affiliateIdLabel = new JLabel("Affiliate Id :");
         affiliateIdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -60,8 +60,8 @@ public class AffiliatePanel extends JPanel {
         affiliateId.setColumns(7);
         this.add(affiliateId);
         //first column is empty
-        this.add(new JLabel(""));
-        affiliateIdValidationLabel = new JLabel("");
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        affiliateIdValidationLabel = new JLabel(Constants.EMPTY_STRING);
         affiliateIdValidationLabel.setForeground(Color.RED);
         this.add(affiliateIdValidationLabel);
 
@@ -72,8 +72,8 @@ public class AffiliatePanel extends JPanel {
         firstName = new JTextField(30);
         this.add(firstName);
         //first column is empty
-        this.add(new JLabel(""));
-        firstNameValidationLabel = new JLabel("");
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        firstNameValidationLabel = new JLabel(Constants.EMPTY_STRING);
         firstNameValidationLabel.setForeground(Color.RED);
         this.add(firstNameValidationLabel);
 
@@ -83,8 +83,8 @@ public class AffiliatePanel extends JPanel {
         lastName = new JTextField(30);
         this.add(lastName);
         //first column is empty
-        this.add(new JLabel(""));
-        lastNameValidationLabel = new JLabel("");
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        lastNameValidationLabel = new JLabel(Constants.EMPTY_STRING);
         lastNameValidationLabel.setForeground(Color.RED);
         this.add(lastNameValidationLabel);
 
@@ -96,7 +96,7 @@ public class AffiliatePanel extends JPanel {
         genderComboBox.setSelectedIndex(-1);
         genderComboBox.setMaximumRowCount(3);
         this.add(genderComboBox);
-        this.add(new JLabel(""));
+        this.add(new JLabel(Constants.EMPTY_STRING));
         genderValidationLabel = new JLabel();
         genderValidationLabel.setForeground(Color.RED);
         this.add(genderValidationLabel);
@@ -114,8 +114,8 @@ public class AffiliatePanel extends JPanel {
         birthDate = new JFormattedTextField(birthDateMask);
         add(birthDate);
         //first column is empty
-        this.add(new JLabel(""));
-        birthDateValidationLabel = new JLabel("");
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        birthDateValidationLabel = new JLabel(Constants.EMPTY_STRING);
         birthDateValidationLabel.setForeground(Color.RED);
         this.add(birthDateValidationLabel);
 
@@ -125,8 +125,8 @@ public class AffiliatePanel extends JPanel {
         phone = new JTextField(30);
         this.add(phone);
         //first column is empty
-        this.add(new JLabel(""));
-        phoneValidationLabel = new JLabel("");
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        phoneValidationLabel = new JLabel(Constants.EMPTY_STRING);
         phoneValidationLabel.setForeground(Color.RED);
         this.add(phoneValidationLabel);
 
@@ -136,8 +136,8 @@ public class AffiliatePanel extends JPanel {
         email = new JTextField(30);
         this.add(email);
         //first column is empty
-        this.add(new JLabel(""));
-        emailValidationLabel = new JLabel("");
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        emailValidationLabel = new JLabel(Constants.EMPTY_STRING);
         emailValidationLabel.setForeground(Color.RED);
         this.add(emailValidationLabel);
 
@@ -147,8 +147,8 @@ public class AffiliatePanel extends JPanel {
         playCompetitionCheckBox = new JCheckBox();
         this.add(playCompetitionCheckBox);
 
-        this.add(new JLabel(""));
-        this.add(new JLabel(""));
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        this.add(new JLabel(Constants.EMPTY_STRING));
 
         equipmentLabel = new JLabel("Equipment :");
         equipmentLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -160,8 +160,8 @@ public class AffiliatePanel extends JPanel {
         equipmentComboBox.setMaximumRowCount(5);
         this.add(equipmentComboBox);
 
-        this.add(new JLabel(""));
-        equipmentValidationLabel = new JLabel("");
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        equipmentValidationLabel = new JLabel(Constants.EMPTY_STRING);
         equipmentValidationLabel.setForeground(Color.RED);
         this.add(equipmentValidationLabel);
 
@@ -173,19 +173,19 @@ public class AffiliatePanel extends JPanel {
         trainingGroups = trainingController.getAllTrainingGroups();
 
         trainingGroup1ComboBox = new JComboBox(trainingGroups.toArray());
-        trainingGroup1ComboBox.insertItemAt("", 0);
+        trainingGroup1ComboBox.insertItemAt(Constants.EMPTY_STRING, 0);
         trainingGroup1ComboBox.setSelectedIndex(0);
         trainingGroup1ComboBox.setMaximumRowCount(5);
         this.add(trainingGroup1ComboBox);
-        this.add(new JLabel(""));
+        this.add(new JLabel(Constants.EMPTY_STRING));
 
         trainingGroup2ComboBox = new JComboBox(trainingGroups.toArray());
-        trainingGroup2ComboBox.insertItemAt("", 0);
+        trainingGroup2ComboBox.insertItemAt(Constants.EMPTY_STRING, 0);
         trainingGroup2ComboBox.setSelectedIndex(0);
         trainingGroup2ComboBox.setMaximumRowCount(5);
         this.add(trainingGroup2ComboBox);
-        this.add(new JLabel(""));
-        trainingGroupValidationLabel = new JLabel("");
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        trainingGroupValidationLabel = new JLabel(Constants.EMPTY_STRING);
         trainingGroupValidationLabel.setForeground(Color.RED);
         this.add(trainingGroupValidationLabel);
 
@@ -194,51 +194,51 @@ public class AffiliatePanel extends JPanel {
         manRankingLabel.setVisible(false);
         this.add(manRankingLabel);
 
-        manRanking = new JLabel("");
+        manRanking = new JLabel(Constants.EMPTY_STRING);
         this.add(manRanking);
 
-        this.add(new JLabel(""));
-        this.add(new JLabel(""));
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        this.add(new JLabel(Constants.EMPTY_STRING));
 
         womanRankingLabel = new JLabel("Woman Ranking :");
         womanRankingLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         womanRankingLabel.setVisible(false);
         this.add(womanRankingLabel);
 
-        womanRanking = new JLabel("");
+        womanRanking = new JLabel(Constants.EMPTY_STRING);
         this.add(womanRanking);
 
     }
 
     public void reset() {
-        affiliateId.setText("");
+        affiliateId.setText(Constants.EMPTY_STRING);
         affiliateId.setEnabled(true);
-        firstName.setText("");
-        lastName.setText("");
-        email.setText("");
-        phone.setText("");
-        birthDate.setText("");
+        firstName.setText(Constants.EMPTY_STRING);
+        lastName.setText(Constants.EMPTY_STRING);
+        email.setText(Constants.EMPTY_STRING);
+        phone.setText(Constants.EMPTY_STRING);
+        birthDate.setText(Constants.EMPTY_STRING);
         genderComboBox.setSelectedIndex(-1);
         equipmentComboBox.setSelectedIndex(-1);
         trainingGroup1ComboBox.setSelectedIndex(0);
         trainingGroup2ComboBox.setSelectedIndex(0);
-        womanRanking.setText("");
-        manRanking.setText("");
+        womanRanking.setText(Constants.EMPTY_STRING);
+        manRanking.setText(Constants.EMPTY_STRING);
         manRankingLabel.setVisible(false);
         womanRankingLabel.setVisible(false);
         resetValidation();
     }
 
     public void resetValidation() {
-        affiliateIdValidationLabel.setText("");
-        firstNameValidationLabel.setText("");
-        lastNameValidationLabel.setText("");
-        emailValidationLabel.setText("");
-        phoneValidationLabel.setText("");
-        birthDateValidationLabel.setText("");
-        trainingGroupValidationLabel.setText("");
-        genderValidationLabel.setText("");
-        equipmentValidationLabel.setText("");
+        affiliateIdValidationLabel.setText(Constants.EMPTY_STRING);
+        firstNameValidationLabel.setText(Constants.EMPTY_STRING);
+        lastNameValidationLabel.setText(Constants.EMPTY_STRING);
+        emailValidationLabel.setText(Constants.EMPTY_STRING);
+        phoneValidationLabel.setText(Constants.EMPTY_STRING);
+        birthDateValidationLabel.setText(Constants.EMPTY_STRING);
+        trainingGroupValidationLabel.setText(Constants.EMPTY_STRING);
+        genderValidationLabel.setText(Constants.EMPTY_STRING);
+        equipmentValidationLabel.setText(Constants.EMPTY_STRING);
     }
 
     public Affiliate getAffiliate() {
@@ -263,7 +263,7 @@ public class AffiliatePanel extends JPanel {
             gregorianBirthDate = null;
         }
 
-        String selectedGender="";
+        String selectedGender = Constants.EMPTY_STRING;
         if (genderComboBox.getSelectedIndex()!=-1) {
             selectedGender = genderComboBox.getSelectedItem().toString().substring(0, 1);
         }
@@ -400,31 +400,31 @@ public class AffiliatePanel extends JPanel {
 
     public void setValidationResult(ArrayList<ValidationResult> validationResults) {
         for (ValidationResult validationResult : validationResults) {
-            if (validationResult.getElementValidated() == "AFFILIATEID") {
+            if (validationResult.getElementValidated() == Constants.AFFILIATEID) {
                 affiliateIdValidationLabel.setText(validationResult.getMessage());
             }
-            if (validationResult.getElementValidated() == "FIRSTNAME") {
+            if (validationResult.getElementValidated() == Constants.FIRSTNAME) {
                 firstNameValidationLabel.setText(validationResult.getMessage());
             }
-            if (validationResult.getElementValidated() == "LASTNAME") {
+            if (validationResult.getElementValidated() == Constants.LASTNAME) {
                 lastNameValidationLabel.setText(validationResult.getMessage());
             }
-            if (validationResult.getElementValidated() == "PHONE") {
+            if (validationResult.getElementValidated() == Constants.PHONE) {
                 phoneValidationLabel.setText(validationResult.getMessage());
             }
-            if (validationResult.getElementValidated() == "EMAIL") {
+            if (validationResult.getElementValidated() == Constants.EMAIL) {
                 emailValidationLabel.setText(validationResult.getMessage());
             }
-            if (validationResult.getElementValidated() == "BIRTHDATE") {
+            if (validationResult.getElementValidated() == Constants.BIRTHDATE) {
                 birthDateValidationLabel.setText(validationResult.getMessage());
             }
-            if (validationResult.getElementValidated() == "TRAININGS") {
+            if (validationResult.getElementValidated() == Constants.TRAININGS) {
                 trainingGroupValidationLabel.setText(validationResult.getMessage());
             }
-            if (validationResult.getElementValidated() == "GENDER") {
+            if (validationResult.getElementValidated() == Constants.GENDER) {
                 genderValidationLabel.setText(validationResult.getMessage());
             }
-            if (validationResult.getElementValidated() == "EQUIPMENT") {
+            if (validationResult.getElementValidated() == Constants.EQUIPMENT) {
                 equipmentValidationLabel.setText(validationResult.getMessage());
             }
         }

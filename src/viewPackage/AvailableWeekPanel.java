@@ -5,6 +5,7 @@ import controllerPackage.SearchesController;
 import exceptionPackage.RankingAccessException;
 import exceptionPackage.SearchAccessException;
 import modelPackage.*;
+import utils.Constants;
 import utils.Formating;
 
 import javax.swing.*;
@@ -74,7 +75,7 @@ public class AvailableWeekPanel extends JPanel {
             e.printStackTrace();
         }
 
-        rankingValidationLabel = new JLabel("");
+        rankingValidationLabel = new JLabel(Constants.EMPTY_STRING);
         rankingValidationLabel.setHorizontalAlignment(SwingConstants.LEFT);
         rankingValidationLabel.setForeground(Color.RED);
         comboPanel.add(rankingValidationLabel);
@@ -89,7 +90,7 @@ public class AvailableWeekPanel extends JPanel {
         weekComboBox.setMaximumRowCount(5);
         comboPanel.add(weekComboBox);
 
-        weekValidationLabel = new JLabel("");
+        weekValidationLabel = new JLabel(Constants.EMPTY_STRING);
         weekValidationLabel.setHorizontalAlignment(SwingConstants.LEFT);
         weekValidationLabel.setForeground(Color.RED);
         comboPanel.add(weekValidationLabel);
@@ -102,8 +103,8 @@ public class AvailableWeekPanel extends JPanel {
 
         // third fourth and fifth row in the top panel
         topPanel.add(comboPanel);
-        topPanel.add(new JLabel(""));
-        topPanel.add(new JLabel(""));
+        topPanel.add(new JLabel(Constants.EMPTY_STRING));
+        topPanel.add(new JLabel(Constants.EMPTY_STRING));
 
 
         add(topPanel, BorderLayout.NORTH);
