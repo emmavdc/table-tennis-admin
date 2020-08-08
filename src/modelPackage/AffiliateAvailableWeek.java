@@ -8,8 +8,8 @@ public class AffiliateAvailableWeek {
 
 
     public AffiliateAvailableWeek(String firstName, String lastName){
-        setFirstName(firstName);
-        setLastName(lastName);
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public String getFirstName() {
@@ -22,14 +22,6 @@ public class AffiliateAvailableWeek {
 
     public String getPhone() {
         return phone;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public void setPhone(String phone) {

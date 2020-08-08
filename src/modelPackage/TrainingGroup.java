@@ -16,42 +16,16 @@ public class TrainingGroup {
 
     public TrainingGroup(Integer trainingGroupID, LocalTime timeStart, LocalTime timeEnd
             , Integer day, Integer roomID, Integer trainerID){
-
-       setTrainingGroupID(trainingGroupID);
-       setTimeStart(timeStart);
-       setTimeEnd(timeEnd);
-       setDay(day);
-       setRoomID(roomID);
-       setTrainerID(trainerID);
-
+        this.trainingGroupID = trainingGroupID;
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
+        this.day = day;
+        this.roomID = roomID;
+        this.trainerID = trainerID;
     }
 
     public Integer getTrainingGroupID() {
         return trainingGroupID;
-    }
-
-    public void setTrainingGroupID(Integer trainingGroupID) {
-        this.trainingGroupID = trainingGroupID;
-    }
-
-    public void setTimeStart(LocalTime timeStart) {
-        this.timeStart = timeStart;
-    }
-
-    public void setTimeEnd(LocalTime timeEnd) {
-        this.timeEnd = timeEnd;
-    }
-
-    public void setDay(Integer day) {
-        this.day = day;
-    }
-
-    public void setRoomID(Integer roomID) {
-        this.roomID = roomID;
-    }
-
-    public void setTrainerID(Integer trainerID) {
-        this.trainerID = trainerID;
     }
 
     public void setRoom(Room room) {

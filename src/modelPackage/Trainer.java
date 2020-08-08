@@ -8,10 +8,10 @@ public class Trainer {
     private String phone;
 
     public Trainer(Integer trainerID, String firstName, String lastName){
+        this.trainerID = trainerID;
+        this.firstName = firstName;
+        this.lastName = lastName;
 
-        setTrainerID(trainerID);
-        setFirstName(firstName);
-        setLastName(lastName);
     }
 
     public String getFirstName() {
@@ -24,18 +24,6 @@ public class Trainer {
 
     public String getPhone() {
         return phone;
-    }
-
-    public void setTrainerID(Integer trainerID) {
-        this.trainerID = trainerID;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public void setPhone(String phone) {

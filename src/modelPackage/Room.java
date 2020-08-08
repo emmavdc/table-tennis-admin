@@ -9,11 +9,11 @@ public class Room {
     private String locality;
 
     public Room(Integer number, String streetName, String streetNumber, Integer postalCode, String locality){
-        setNumber(number);
-        setStreetName(streetName);
-        setStreetNumber(streetNumber);
-        setPostalCode(postalCode);
-        setLocality(locality);
+        this.number = number;
+        this.streetName = streetName;
+        this.streetNumber = streetNumber;
+        this.postalCode = postalCode;
+        this.locality = locality;
     }
 
     public Integer getNumber() {
@@ -34,25 +34,5 @@ public class Room {
 
     public String getLocality() {
         return locality;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
-    }
-
-    public void setStreetNumber(String streetNumber) {
-        this.streetNumber = streetNumber;
-    }
-
-    public void setPostalCode(Integer postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    public void setLocality(String locality) {
-        this.locality = locality;
     }
 }

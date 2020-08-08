@@ -5,9 +5,9 @@ public class Training {
     private Integer trainingGroupId;
     private Integer affiliateId;
 
-    public Training(Integer trainingId, Integer affiliateId) {
-        setAffiliateId(affiliateId);
-        setTrainingGroupId(trainingId);
+    public Training(Integer trainingGroupId, Integer affiliateId) {
+        this.trainingGroupId = trainingGroupId;
+        this.affiliateId = affiliateId;
     }
 
     public Integer getAffiliateId() {
@@ -18,11 +18,4 @@ public class Training {
         return trainingGroupId;
     }
 
-    public void setAffiliateId(Integer affiliateId) {
-        this.affiliateId = affiliateId;
-    }
-
-    public void setTrainingGroupId(Integer trainingGroupId) {
-        this.trainingGroupId = trainingGroupId;
-    }
 }

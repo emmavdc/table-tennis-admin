@@ -23,13 +23,13 @@ public class Affiliate {
     public Affiliate(Integer affiliateID, String firstName, String lastName,
                      String gender, GregorianCalendar birthDate, Boolean playCompetition, Integer equipment){
 
-        setAffiliateID(affiliateID);
-        setFirstName(firstName);
-        setLastName(lastName);
+        this.affiliateID = affiliateID;
+        this.firstName = firstName;
+        this.lastName = lastName;
         setGender(gender);
-        setBirthDate(birthDate);
-        setPlayCompetition(playCompetition);
-        setEquipment(equipment);
+        this.birthDate = birthDate;
+        this.playCompetition = playCompetition;
+        this.equipment = equipment;
     }
 
     // getters
@@ -84,28 +84,8 @@ public class Affiliate {
 
     //setters
 
-    public void setAffiliateID(Integer affiliateID) {
-        this.affiliateID = affiliateID;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public void setGender(String gender) {
         this.gender = gender.toUpperCase();
-    }
-
-    public void setBirthDate(GregorianCalendar birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public void setPlayCompetition(Boolean playCompetition) {
-        this.playCompetition = playCompetition;
     }
 
     public void setPhone(String phone) {
@@ -114,10 +94,6 @@ public class Affiliate {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setEquipment(Integer equipment) {
-        this.equipment = equipment;
     }
 
     public void setTrainings(ArrayList<Training> trainings) {

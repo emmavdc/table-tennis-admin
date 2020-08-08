@@ -5,8 +5,8 @@ public class RankingSeason {
     private String rankingName;
 
     public RankingSeason(Integer season, String rankingName){
-        setSeason(season);
-        setRankingName(rankingName);
+        this.season = season;
+        this.rankingName = rankingName;
     }
 
     public Integer getSeason() {
@@ -15,14 +15,6 @@ public class RankingSeason {
 
     public String getRankingName() {
         return rankingName;
-    }
-
-    public void setSeason(Integer season) {
-        this.season = season;
-    }
-
-    public void setRankingName(String rankingName) {
-        this.rankingName = rankingName;
     }
 
 }

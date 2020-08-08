@@ -8,9 +8,9 @@ public class AffiliateInTraining {
     private String rankingName;
 
     public AffiliateInTraining(String firstName, String lastName, String rankingName){
-        setFirstName(firstName);
-        setLastName(lastName);
-        setRankingName(rankingName);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.rankingName = rankingName;
     }
 
     public String getFirstName() {
@@ -29,20 +29,8 @@ public class AffiliateInTraining {
         return rankingName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public void setRankingName(String rankingName) {
-        this.rankingName = rankingName;
     }
 
     public String toString(){
