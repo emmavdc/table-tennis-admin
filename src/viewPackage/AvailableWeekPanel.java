@@ -136,6 +136,9 @@ public class AvailableWeekPanel extends JPanel {
         weekComboBox.setSelectedIndex(-1);
         model.setContents(new ArrayList<AffiliateAvailableWeek>());
         model.fireTableDataChanged();
+
+        weekValidationLabel.setText(Constants.EMPTY_STRING);
+        rankingValidationLabel.setText(Constants.EMPTY_STRING);
     }
 
     private void setCurrentSeason(){
@@ -154,6 +157,10 @@ public class AvailableWeekPanel extends JPanel {
     private class SelectListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            rankingValidationLabel.setText(Constants.EMPTY_STRING);
+            weekValidationLabel.setText(Constants.EMPTY_STRING);
+
             if(tablePanel != null) remove(tablePanel);
             Ranking ranking = (Ranking) rankingComboBox.getSelectedItem();
             int weekNumber;

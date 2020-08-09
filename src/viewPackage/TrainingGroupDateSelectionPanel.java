@@ -158,6 +158,10 @@ public class TrainingGroupDateSelectionPanel extends JPanel {
         model.fireTableDataChanged();
         startDateFormatted.setText(Constants.EMPTY_STRING);
         endDateFormatted.setText(Constants.EMPTY_STRING);
+
+        dateValidationLabel.setText(Constants.EMPTY_STRING);
+        trainingGroupValidationLabel.setText(Constants.EMPTY_STRING);
+
     }
 
     private void setCurrentSeason(){
@@ -180,6 +184,7 @@ public class TrainingGroupDateSelectionPanel extends JPanel {
             startDate = startDateFormatted.getText();
             endDate = endDateFormatted.getText();
             dateValidationLabel.setText(Constants.EMPTY_STRING);
+            trainingGroupValidationLabel.setText(Constants.EMPTY_STRING);
 
             GregorianCalendar gregorianStartDate;
             GregorianCalendar gregorianEndDate;

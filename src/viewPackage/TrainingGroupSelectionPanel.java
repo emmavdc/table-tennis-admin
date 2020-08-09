@@ -117,6 +117,8 @@ public class TrainingGroupSelectionPanel extends JPanel {
         model.setContents(new ArrayList<AffiliateInTraining>());
         model.fireTableDataChanged();
 
+        trainingGroupValidationLabel.setText(Constants.EMPTY_STRING);
+
     }
 
     private void setCurrentSeason(){
@@ -135,6 +137,8 @@ public class TrainingGroupSelectionPanel extends JPanel {
     private class SelectListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            trainingGroupValidationLabel.setText(Constants.EMPTY_STRING);
 
             TrainingGroup trainingGroup = (TrainingGroup) trainingGroupComboBox.getSelectedItem();
 
