@@ -1,6 +1,9 @@
 package businessPackage;
 
 
+import commonValidator.EmailValidator;
+import commonValidator.NameValidator;
+import commonValidator.PhoneValidator;
 import dataAccessPackage.AffiliateDBAccess;
 import dataAccessPackage.AffiliateDataAccess;
 import exceptionPackage.AbsenceAccessException;

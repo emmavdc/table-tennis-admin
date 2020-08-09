@@ -1,5 +1,8 @@
 package viewPackage.Affiliate;
 
+import commonValidator.EmailValidator;
+import commonValidator.NameValidator;
+import commonValidator.PhoneValidator;
 import controllerPackage.EquipmentController;
 import controllerPackage.TrainingController;
 import exceptionPackage.EquipmentAccessException;
@@ -12,11 +15,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.awt.event.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.GregorianCalendar;
+import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,8 +40,16 @@ public class AffiliatePanel extends JPanel {
     private ArrayList<Equipment> equipments;
     private ArrayList<TrainingGroup> trainingGroups;
     private Formating formatingHelper;
+    private NameValidator nameValidator;
+    private EmailValidator emailValidator;
+    private PhoneValidator phoneValidator;
 
     public AffiliatePanel() throws EquipmentAccessException, TrainingAccessException {
+
+
+        nameValidator = new NameValidator();
+        emailValidator = new EmailValidator();
+        phoneValidator = new PhoneValidator();
 
         formatingHelper = new Formating();
 
@@ -57,6 +67,7 @@ public class AffiliatePanel extends JPanel {
         affiliateIdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(affiliateIdLabel);
         affiliateId = new JTextField(7);
+
         affiliateId.setColumns(7);
         this.add(affiliateId);
         //first column is empty
@@ -70,6 +81,8 @@ public class AffiliatePanel extends JPanel {
         firstNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(firstNameLabel);
         firstName = new JTextField(30);
+        // verify input
+        firstName.setInputVerifier(new FirstNameInputVerifier());
         this.add(firstName);
         //first column is empty
         this.add(new JLabel(Constants.EMPTY_STRING));
@@ -81,6 +94,8 @@ public class AffiliatePanel extends JPanel {
         lastNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(lastNameLabel);
         lastName = new JTextField(30);
+        // verify input
+        lastName.setInputVerifier(new LastNameInputVerifier());
         this.add(lastName);
         //first column is empty
         this.add(new JLabel(Constants.EMPTY_STRING));
@@ -95,6 +110,8 @@ public class AffiliatePanel extends JPanel {
         genderComboBox = new JComboBox(values);
         genderComboBox.setSelectedIndex(-1);
         genderComboBox.setMaximumRowCount(3);
+        // verify input
+        genderComboBox.setInputVerifier(new GenderInputVerifier());
         this.add(genderComboBox);
         this.add(new JLabel(Constants.EMPTY_STRING));
         genderValidationLabel = new JLabel();
@@ -248,6 +265,7 @@ public class AffiliatePanel extends JPanel {
         int affiliateIdNumber;
         try {
             affiliateIdNumber = Integer.parseInt(affiliateId.getText());
+
         } catch (Exception e) {
             //if the id is not numeric then set a bad value which will be validated to false into the business layer
             affiliateIdNumber = -1;
@@ -449,5 +467,122 @@ public class AffiliatePanel extends JPanel {
                 break;
         }
     }
+
+    private class FirstNameInputVerifier extends InputVerifier{
+
+        @Override
+        public boolean verify(JComponent input) {
+            JTextField textField = (JTextField) input;
+
+            if(nameValidator.validate(textField.getText())){
+                firstNameValidationLabel.setText("");
+                return true;
+            }
+            else{
+                firstNameValidationLabel.setText("FirstName must contain alphabetic characters");
+                return  false;
+            }
+        }
+    }
+
+    private class LastNameInputVerifier extends InputVerifier{
+
+        @Override
+        public boolean verify(JComponent input) {
+            JTextField textField = (JTextField) input;
+
+            if(nameValidator.validate(textField.getText())){
+                lastNameValidationLabel.setText("");
+                return true;
+            }
+            else{
+                lastNameValidationLabel.setText("LastName must contain alphabetic characters");
+                return  false;
+            }
+        }
+    }
+
+    private class GenderInputVerifier extends  InputVerifier{
+
+        @Override
+        public boolean verify(JComponent input) {
+            if(genderComboBox.getSelectedIndex()!=-1){
+                genderValidationLabel.setText("");
+                return true;
+            }
+            else{
+                genderValidationLabel.setText("Select a gender!");
+                return false;
+            }
+        }
+    }
+
+    private class BirthDateInputVerifier extends InputVerifier{
+        @Override
+        public boolean verify(JComponent input) {
+
+            return true;
+        }
+    }
+
+    private class PhoneInputVerifier extends InputVerifier{
+        @Override
+        public boolean verify(JComponent input) {
+            JTextField textField = (JTextField) input;
+
+            if(textField.getText().length() != 0){
+
+                if(textField.getText().length()  >= 15){
+                    phoneValidationLabel.setText("Phone should be < 15 digits !");
+                    return false;
+                }
+                else {
+                    if(!(phoneValidator.validate(textField.getText()))){
+                        phoneValidationLabel.setText("Wrong phone format");
+                        return false;
+                    }
+                    else{
+                        phoneValidationLabel.setText("");
+                        return true;
+                    }
+                }
+            }
+            else{
+                phoneValidationLabel.setText("");
+                return true;
+            }
+        }
+    }
+
+    private class EmailInputVerifier extends InputVerifier{
+        @Override
+        public boolean verify(JComponent input) {
+            JTextField textField = (JTextField) input;
+
+            if(emailValidator.validate(textField.getText())){
+                emailValidationLabel.setText("");
+                return true;
+            }
+            else{
+                emailValidationLabel.setText("Wrong email format");
+                return  false;
+            }
+        }
+    }
+
+    private class EquipmentInputVerifier extends InputVerifier{
+        @Override
+        public boolean verify(JComponent input) {
+            if(equipmentComboBox.getSelectedIndex()!=-1){
+                equipmentValidationLabel.setText("");
+                return true;
+            }
+            else{
+                equipmentValidationLabel.setText("Select an equipment!");
+                return false;
+            }
+        }
+    }
+
 
 }
