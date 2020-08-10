@@ -31,7 +31,7 @@ public class AffiliateManager {
         phoneValidator = new PhoneValidator();
         nameValidator = new NameValidator();
         Calendar c = Calendar.getInstance();
-        this.year  = c.get(Calendar.YEAR);
+        this.year  = c.get(Calendar.YEAR) - 4;
     }
 
     public ArrayList<ValidationResult> insertAffiliate(Affiliate affiliate) throws AffiliateAccessException {
@@ -102,7 +102,7 @@ public class AffiliateManager {
         }
         else{
             if(affiliate.getBirthDate().get(Calendar.YEAR) <= 1900 || affiliate.getBirthDate().get(Calendar.YEAR) > year){
-                validationResult.add(new ValidationResult(Constants.BIRTHDATE, "birthDate should be >1900 and < " + year));
+                validationResult.add(new ValidationResult(Constants.BIRTHDATE, "birthDate should be >1900 and <= " + year));
             }
         }
 

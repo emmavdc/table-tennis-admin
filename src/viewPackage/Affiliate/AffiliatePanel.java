@@ -9,13 +9,13 @@ import exceptionPackage.EquipmentAccessException;
 import exceptionPackage.TrainingAccessException;
 import modelPackage.*;
 import utils.Constants;
+import commonValidator.DateValidator;
 import utils.Formating;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
-import java.awt.event.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -43,6 +43,7 @@ public class AffiliatePanel extends JPanel {
     private NameValidator nameValidator;
     private EmailValidator emailValidator;
     private PhoneValidator phoneValidator;
+
 
     public AffiliatePanel() throws EquipmentAccessException, TrainingAccessException {
 
@@ -129,7 +130,9 @@ public class AffiliatePanel extends JPanel {
         } catch (ParseException e) {
         }
         birthDate = new JFormattedTextField(birthDateMask);
-        add(birthDate);
+        //verify input
+        birthDate.setInputVerifier(new BirthDateInputVerifier());
+        this.add(birthDate);
         //first column is empty
         this.add(new JLabel(Constants.EMPTY_STRING));
         birthDateValidationLabel = new JLabel(Constants.EMPTY_STRING);
@@ -140,6 +143,8 @@ public class AffiliatePanel extends JPanel {
         phoneLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(phoneLabel);
         phone = new JTextField(30);
+        //verify input
+        phone.setInputVerifier(new PhoneInputVerifier());
         this.add(phone);
         //first column is empty
         this.add(new JLabel(Constants.EMPTY_STRING));
@@ -151,6 +156,8 @@ public class AffiliatePanel extends JPanel {
         emailLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(emailLabel);
         email = new JTextField(30);
+        //verify input
+        email.setInputVerifier(new EmailInputVerifier());
         this.add(email);
         //first column is empty
         this.add(new JLabel(Constants.EMPTY_STRING));
@@ -175,6 +182,8 @@ public class AffiliatePanel extends JPanel {
         equipmentComboBox = new JComboBox(equipments.toArray());
         equipmentComboBox.setSelectedIndex(-1);
         equipmentComboBox.setMaximumRowCount(5);
+        //verify input
+        equipmentComboBox.setInputVerifier(new EquipmentInputVerifier());
         this.add(equipmentComboBox);
 
         this.add(new JLabel(Constants.EMPTY_STRING));
@@ -272,8 +281,8 @@ public class AffiliatePanel extends JPanel {
         }
 
         GregorianCalendar gregorianBirthDate;
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
         try {
             gregorianBirthDate = new GregorianCalendar();
             gregorianBirthDate.setTime(simpleDateFormat.parse(birthDate.getText()));
@@ -520,8 +529,26 @@ public class AffiliatePanel extends JPanel {
     private class BirthDateInputVerifier extends InputVerifier{
         @Override
         public boolean verify(JComponent input) {
+            JTextField textField = (JTextField) input;
 
-            return true;
+            Calendar c = Calendar.getInstance();
+            int year  = c.get(Calendar.YEAR) - 4;
+
+            GregorianCalendar javaDate = DateValidator.validateDate(textField.getText());
+
+            if(javaDate != null){
+
+                if(javaDate.get(Calendar.YEAR) <= 1900 || javaDate.get(Calendar.YEAR) > year){
+                    birthDateValidationLabel.setText("birthDate should be >1900 and <= " + year);
+                    return false;
+                }
+                birthDateValidationLabel.setText(Constants.EMPTY_STRING);
+                return true;
+            }
+            else{
+                birthDateValidationLabel.setText("Wrong date format");
+                return false;
+            }
         }
     }
 
@@ -559,13 +586,19 @@ public class AffiliatePanel extends JPanel {
         public boolean verify(JComponent input) {
             JTextField textField = (JTextField) input;
 
-            if(emailValidator.validate(textField.getText())){
-                emailValidationLabel.setText("");
-                return true;
+            if(textField.getText().length() != 0){
+                if(emailValidator.validate(textField.getText())){
+                    emailValidationLabel.setText("");
+                    return true;
+                }
+                else{
+                    emailValidationLabel.setText("Wrong email format");
+                    return  false;
+                }
             }
             else{
-                emailValidationLabel.setText("Wrong email format");
-                return  false;
+                emailValidationLabel.setText("");
+                return true;
             }
         }
     }
