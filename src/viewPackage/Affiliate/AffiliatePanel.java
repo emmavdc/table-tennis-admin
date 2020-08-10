@@ -202,6 +202,8 @@ public class AffiliatePanel extends JPanel {
         trainingGroup1ComboBox.insertItemAt(Constants.EMPTY_STRING, 0);
         trainingGroup1ComboBox.setSelectedIndex(0);
         trainingGroup1ComboBox.setMaximumRowCount(5);
+        //verify input
+        trainingGroup1ComboBox.setInputVerifier(new TrainingGroupInputVerifier());
         this.add(trainingGroup1ComboBox);
         this.add(new JLabel(Constants.EMPTY_STRING));
 
@@ -209,6 +211,8 @@ public class AffiliatePanel extends JPanel {
         trainingGroup2ComboBox.insertItemAt(Constants.EMPTY_STRING, 0);
         trainingGroup2ComboBox.setSelectedIndex(0);
         trainingGroup2ComboBox.setMaximumRowCount(5);
+        //verify input
+        trainingGroup2ComboBox.setInputVerifier(new TrainingGroupInputVerifier());
         this.add(trainingGroup2ComboBox);
         this.add(new JLabel(Constants.EMPTY_STRING));
         trainingGroupValidationLabel = new JLabel(Constants.EMPTY_STRING);
@@ -477,6 +481,22 @@ public class AffiliatePanel extends JPanel {
         }
     }
 
+    private  class AffiliateIDInputVerifier extends InputVerifier{
+        @Override
+        public boolean verify(JComponent input) {
+
+            if((Integer.parseInt(affiliateId.getText()) <= 0) || (Integer.parseInt(affiliateId.getText()) > 9999999)){
+
+                affiliateIdValidationLabel.setText(Constants.AFFILIATEID_SIZE_ERROR);
+                return false;
+            }
+            else{
+                affiliateIdValidationLabel.setText(Constants.EMPTY_STRING);
+                return true;
+            }
+        }
+    }
+
     private class FirstNameInputVerifier extends InputVerifier{
 
         @Override
@@ -484,11 +504,11 @@ public class AffiliatePanel extends JPanel {
             JTextField textField = (JTextField) input;
 
             if(nameValidator.validate(textField.getText())){
-                firstNameValidationLabel.setText("");
+                firstNameValidationLabel.setText(Constants.EMPTY_STRING);
                 return true;
             }
             else{
-                firstNameValidationLabel.setText("FirstName must contain alphabetic characters");
+                firstNameValidationLabel.setText(Constants.FIRSTNAME_ERROR);
                 return  false;
             }
         }
@@ -501,11 +521,11 @@ public class AffiliatePanel extends JPanel {
             JTextField textField = (JTextField) input;
 
             if(nameValidator.validate(textField.getText())){
-                lastNameValidationLabel.setText("");
+                lastNameValidationLabel.setText(Constants.EMPTY_STRING);
                 return true;
             }
             else{
-                lastNameValidationLabel.setText("LastName must contain alphabetic characters");
+                lastNameValidationLabel.setText(Constants.LASTNAME_ERROR);
                 return  false;
             }
         }
@@ -516,11 +536,11 @@ public class AffiliatePanel extends JPanel {
         @Override
         public boolean verify(JComponent input) {
             if(genderComboBox.getSelectedIndex()!=-1){
-                genderValidationLabel.setText("");
+                genderValidationLabel.setText(Constants.EMPTY_STRING);
                 return true;
             }
             else{
-                genderValidationLabel.setText("Select a gender!");
+                genderValidationLabel.setText(Constants.GENDER_ERROR);
                 return false;
             }
         }
@@ -546,7 +566,7 @@ public class AffiliatePanel extends JPanel {
                 return true;
             }
             else{
-                birthDateValidationLabel.setText("Wrong date format");
+                birthDateValidationLabel.setText(Constants.DATE_FORMAT_ERROR);
                 return false;
             }
         }
@@ -560,22 +580,22 @@ public class AffiliatePanel extends JPanel {
             if(textField.getText().length() != 0){
 
                 if(textField.getText().length()  >= 15){
-                    phoneValidationLabel.setText("Phone should be < 15 digits !");
+                    phoneValidationLabel.setText(Constants.PHONE_SIZE_ERROR);
                     return false;
                 }
                 else {
                     if(!(phoneValidator.validate(textField.getText()))){
-                        phoneValidationLabel.setText("Wrong phone format");
+                        phoneValidationLabel.setText(Constants.PHONE_FORMAT_ERROR);
                         return false;
                     }
                     else{
-                        phoneValidationLabel.setText("");
+                        phoneValidationLabel.setText(Constants.EMPTY_STRING);
                         return true;
                     }
                 }
             }
             else{
-                phoneValidationLabel.setText("");
+                phoneValidationLabel.setText(Constants.EMPTY_STRING);
                 return true;
             }
         }
@@ -588,16 +608,16 @@ public class AffiliatePanel extends JPanel {
 
             if(textField.getText().length() != 0){
                 if(emailValidator.validate(textField.getText())){
-                    emailValidationLabel.setText("");
+                    emailValidationLabel.setText(Constants.EMPTY_STRING);
                     return true;
                 }
                 else{
-                    emailValidationLabel.setText("Wrong email format");
+                    emailValidationLabel.setText(Constants.EMAIL_FORMAT_ERROR);
                     return  false;
                 }
             }
             else{
-                emailValidationLabel.setText("");
+                emailValidationLabel.setText(Constants.EMPTY_STRING);
                 return true;
             }
         }
@@ -607,13 +627,36 @@ public class AffiliatePanel extends JPanel {
         @Override
         public boolean verify(JComponent input) {
             if(equipmentComboBox.getSelectedIndex()!=-1){
-                equipmentValidationLabel.setText("");
+                equipmentValidationLabel.setText(Constants.EMPTY_STRING);
                 return true;
             }
             else{
-                equipmentValidationLabel.setText("Select an equipment!");
+                equipmentValidationLabel.setText(Constants.EQUIPMENT_ERROR);
                 return false;
             }
+        }
+    }
+
+    private class TrainingGroupInputVerifier extends InputVerifier{
+        @Override
+        public boolean verify(JComponent input) {
+
+            if(trainingGroup1ComboBox.getSelectedIndex()!= -1 && trainingGroup2ComboBox.getSelectedIndex()!= -1) {
+
+                if (trainingGroup1ComboBox.getSelectedIndex() == trainingGroup2ComboBox.getSelectedIndex()) {
+                    trainingGroupValidationLabel.setText(Constants.TRAINING_GROUP_ERROR);
+                    return false;
+                }
+                else{
+                    trainingGroupValidationLabel.setText(Constants.EMPTY_STRING);
+                    return true;
+                }
+            }
+            else{
+                trainingGroupValidationLabel.setText(Constants.EMPTY_STRING);
+                return true;
+            }
+
         }
     }
 

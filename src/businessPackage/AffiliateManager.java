@@ -72,33 +72,33 @@ public class AffiliateManager {
         ArrayList<ValidationResult> validationResult = new ArrayList<ValidationResult>();
 
         if (affiliate.getAffiliateID() <= 0 || affiliate.getAffiliateID() > 9999999) {
-            validationResult.add(new ValidationResult(Constants.AFFILIATEID, "Affiliate Id should be between 1 and 9999999!"));
+            validationResult.add(new ValidationResult(Constants.AFFILIATEID, Constants.AFFILIATEID_SIZE_ERROR));
         }
         if(!(nameValidator.validate(affiliate.getFirstName()))){
-            validationResult.add(new ValidationResult(Constants.FIRSTNAME, "FirstName must contain alphabetic characters"));
+            validationResult.add(new ValidationResult(Constants.FIRSTNAME, Constants.FIRSTNAME_ERROR));
         }
         if(!(nameValidator.validate(affiliate.getLastName()))){
-            validationResult.add(new ValidationResult(Constants.LASTNAME, "Lastname must contain alphabetic characters"));
+            validationResult.add(new ValidationResult(Constants.LASTNAME, Constants.LASTNAME_ERROR));
         }
         if(affiliate.getPhone() != null && affiliate.getPhone().length() != 0){
 
             if(affiliate.getPhone().length() >= 15){
-                validationResult.add(new ValidationResult(Constants.PHONE, "Phone should be < 15 digits !"));
+                validationResult.add(new ValidationResult(Constants.PHONE, Constants.PHONE_SIZE_ERROR));
             }
             else {
                 if(!(phoneValidator.validate(affiliate.getPhone()))){
-                    validationResult.add(new ValidationResult(Constants.PHONE, "Wrong phone format"));
+                    validationResult.add(new ValidationResult(Constants.PHONE, Constants.PHONE_FORMAT_ERROR));
                 }
             }
         }
         if( affiliate.getEmail() != null && affiliate.getEmail().length() != 0){
             if(!(emailValidator.validate(affiliate.getEmail()))){
-                validationResult.add(new ValidationResult(Constants.EMAIL, "Wrong email format"));
+                validationResult.add(new ValidationResult(Constants.EMAIL, Constants.EMAIL_FORMAT_ERROR));
             }
         }
 
         if(affiliate.getBirthDate() == null) {
-            validationResult.add(new ValidationResult(Constants.BIRTHDATE, "Wrong birthdate format"));
+            validationResult.add(new ValidationResult(Constants.BIRTHDATE, Constants.DATE_FORMAT_ERROR));
         }
         else{
             if(affiliate.getBirthDate().get(Calendar.YEAR) <= 1900 || affiliate.getBirthDate().get(Calendar.YEAR) > year){
@@ -109,14 +109,14 @@ public class AffiliateManager {
         if(affiliate.getTrainings().size() == 2) {
             if (affiliate.getTrainings().get(0).getTrainingGroupId().intValue()
                     == affiliate.getTrainings().get(1).getTrainingGroupId().intValue()) {
-                validationResult.add(new ValidationResult(Constants.TRAININGS, "The second training day should be different!"));
+                validationResult.add(new ValidationResult(Constants.TRAININGS, Constants.TRAINING_GROUP_ERROR));
             }
         }
         if (affiliate.getGender().isEmpty()) {
-            validationResult.add(new ValidationResult(Constants.GENDER, "Select a gender!"));
+            validationResult.add(new ValidationResult(Constants.GENDER, Constants.GENDER_ERROR));
         }
         if (affiliate.getEquipment() == null) {
-            validationResult.add(new ValidationResult(Constants.EQUIPMENT, "Select an equipment!"));
+            validationResult.add(new ValidationResult(Constants.EQUIPMENT, Constants.EQUIPMENT_ERROR));
         }
         return validationResult;
     }
