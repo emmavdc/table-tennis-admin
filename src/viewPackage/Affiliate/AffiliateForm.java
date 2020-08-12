@@ -61,6 +61,8 @@ public class AffiliateForm extends JPanel {
 
         try {
 
+            if (!affiliatePanel.validateForm()) return;
+
             String messageFeedback = Constants.EMPTY_STRING;
             ArrayList<ValidationResult> validationResults = null;
 
@@ -134,5 +136,9 @@ public class AffiliateForm extends JPanel {
         absenceDialog.setVisible(false);
     }
 
+    public void toggleSaveButton(boolean enable)
+    {
+        this.affiliateButtonsPanel.toggleSaveButton(enable);
+    }
 
 }

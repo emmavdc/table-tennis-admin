@@ -65,11 +65,15 @@ public class AffiliateButtonsPanel extends JPanel {
         }
     }
 
+    public void toggleSaveButton(boolean enable) {
+        this.save.setEnabled(enable);
+    }
+
     private class SaveListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            parent.save();
+           parent.save();
         }
     }
 

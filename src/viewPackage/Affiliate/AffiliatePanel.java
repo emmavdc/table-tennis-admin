@@ -44,9 +44,7 @@ public class AffiliatePanel extends JPanel {
     private EmailValidator emailValidator;
     private PhoneValidator phoneValidator;
 
-
     public AffiliatePanel() throws EquipmentAccessException, TrainingAccessException {
-
 
         nameValidator = new NameValidator();
         emailValidator = new EmailValidator();
@@ -68,6 +66,7 @@ public class AffiliatePanel extends JPanel {
         affiliateIdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(affiliateIdLabel);
         affiliateId = new JTextField(7);
+        affiliateId.setInputVerifier(new AffiliateIdInputVerifier());
 
         affiliateId.setColumns(7);
         this.add(affiliateId);
@@ -276,13 +275,7 @@ public class AffiliatePanel extends JPanel {
         Affiliate affiliate;
 
         int affiliateIdNumber;
-        try {
-            affiliateIdNumber = Integer.parseInt(affiliateId.getText());
-
-        } catch (Exception e) {
-            //if the id is not numeric then set a bad value which will be validated to false into the business layer
-            affiliateIdNumber = -1;
-        }
+        affiliateIdNumber = Integer.parseInt(affiliateId.getText());
 
         GregorianCalendar gregorianBirthDate;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -481,19 +474,49 @@ public class AffiliatePanel extends JPanel {
         }
     }
 
-    private  class AffiliateIDInputVerifier extends InputVerifier{
+
+    public boolean validateForm() {
+
+        boolean isFormValidated = true;
+
+        if (!validateAffiliateId(affiliateId.getText())) isFormValidated = false;
+        if (!validateFirstName(firstName.getText())) isFormValidated = false;
+        if (!validateLastName(lastName.getText())) isFormValidated = false;
+        if (!validateGender(genderComboBox.getSelectedIndex())) isFormValidated = false;
+        if (!validateBirthDate(birthDate.getText())) isFormValidated = false;
+        if (!validatePhone(phone.getText())) isFormValidated = false;
+        if (!validateEmail(email.getText())) isFormValidated = false;
+        if (!validateEquipment(equipmentComboBox.getSelectedIndex())) isFormValidated = false;
+        if (!validateTrainingGroup()) isFormValidated = false;
+
+        return isFormValidated;
+    }
+
+    private  class AffiliateIdInputVerifier extends InputVerifier{
         @Override
         public boolean verify(JComponent input) {
 
-            if((Integer.parseInt(affiliateId.getText()) <= 0) || (Integer.parseInt(affiliateId.getText()) > 9999999)){
+            return validateAffiliateId(((JTextField)input).getText());
+        }
+    }
 
-                affiliateIdValidationLabel.setText(Constants.AFFILIATEID_SIZE_ERROR);
-                return false;
-            }
-            else{
-                affiliateIdValidationLabel.setText(Constants.EMPTY_STRING);
-                return true;
-            }
+    private boolean validateAffiliateId(String affiliateId) {
+        int affiliateIdInt;
+        try {
+            affiliateIdInt = Integer.parseInt(affiliateId);
+        } catch (NumberFormatException e) {
+            affiliateIdValidationLabel.setText(Constants.AFFILIATEID_NOT_NUMERIC);
+            return false;
+        }
+
+        if(affiliateIdInt <= 0 || affiliateIdInt > 9999999) {
+
+            affiliateIdValidationLabel.setText(Constants.AFFILIATEID_SIZE_ERROR);
+            return false;
+        }
+        else{
+            affiliateIdValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
         }
     }
 
@@ -501,16 +524,20 @@ public class AffiliatePanel extends JPanel {
 
         @Override
         public boolean verify(JComponent input) {
-            JTextField textField = (JTextField) input;
+            String firstName = ((JTextField)input).getText();
 
-            if(nameValidator.validate(textField.getText())){
-                firstNameValidationLabel.setText(Constants.EMPTY_STRING);
-                return true;
-            }
-            else{
-                firstNameValidationLabel.setText(Constants.FIRSTNAME_ERROR);
-                return  false;
-            }
+            return validateFirstName(firstName);
+        }
+    }
+
+    private boolean validateFirstName(String firstName) {
+        if(nameValidator.validate(firstName)) {
+            firstNameValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
+        }
+        else{
+            firstNameValidationLabel.setText(Constants.FIRSTNAME_ERROR);
+            return  false;
         }
     }
 
@@ -518,16 +545,20 @@ public class AffiliatePanel extends JPanel {
 
         @Override
         public boolean verify(JComponent input) {
-            JTextField textField = (JTextField) input;
+            String lastName = ((JTextField)input).getText();
 
-            if(nameValidator.validate(textField.getText())){
-                lastNameValidationLabel.setText(Constants.EMPTY_STRING);
-                return true;
-            }
-            else{
-                lastNameValidationLabel.setText(Constants.LASTNAME_ERROR);
-                return  false;
-            }
+            return validateLastName(lastName);
+        }
+    }
+
+    private boolean validateLastName(String lastName) {
+        if(nameValidator.validate(lastName)){
+            lastNameValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
+        }
+        else{
+            lastNameValidationLabel.setText(Constants.LASTNAME_ERROR);
+            return  false;
         }
     }
 
@@ -535,105 +566,130 @@ public class AffiliatePanel extends JPanel {
 
         @Override
         public boolean verify(JComponent input) {
-            if(genderComboBox.getSelectedIndex()!=-1){
-                genderValidationLabel.setText(Constants.EMPTY_STRING);
-                return true;
-            }
-            else{
-                genderValidationLabel.setText(Constants.GENDER_ERROR);
-                return false;
-            }
+
+            int selectedIndex = ((JComboBox)input).getSelectedIndex();
+
+            return validateGender(selectedIndex);
+        }
+    }
+
+    private boolean validateGender(int selectedIndex) {
+        if(selectedIndex!=-1){
+            genderValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
+        }
+        else{
+            genderValidationLabel.setText(Constants.GENDER_ERROR);
+            return false;
         }
     }
 
     private class BirthDateInputVerifier extends InputVerifier{
         @Override
         public boolean verify(JComponent input) {
-            JTextField textField = (JTextField) input;
+            String birthDate = ((JTextField)input).getText();
 
-            Calendar c = Calendar.getInstance();
-            int year  = c.get(Calendar.YEAR) - 4;
+            return validateBirthDate(birthDate);
+        }
+    }
 
-            GregorianCalendar javaDate = DateValidator.validateDate(textField.getText());
+    private boolean validateBirthDate(String birthDate) {
+        Calendar c = Calendar.getInstance();
+        int year  = c.get(Calendar.YEAR) - 4;
 
-            if(javaDate != null){
+        GregorianCalendar javaDate = DateValidator.validateDate(birthDate);
 
-                if(javaDate.get(Calendar.YEAR) <= 1900 || javaDate.get(Calendar.YEAR) > year){
-                    birthDateValidationLabel.setText("birthDate should be >1900 and <= " + year);
-                    return false;
-                }
-                birthDateValidationLabel.setText(Constants.EMPTY_STRING);
-                return true;
-            }
-            else{
-                birthDateValidationLabel.setText(Constants.DATE_FORMAT_ERROR);
+        if(javaDate != null){
+
+            if(javaDate.get(Calendar.YEAR) <= 1900 || javaDate.get(Calendar.YEAR) > year){
+                birthDateValidationLabel.setText("birthDate should be >1900 and <= " + year);
                 return false;
             }
+            birthDateValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
+        }
+        else{
+            birthDateValidationLabel.setText(Constants.DATE_FORMAT_ERROR);
+            return false;
         }
     }
 
     private class PhoneInputVerifier extends InputVerifier{
         @Override
         public boolean verify(JComponent input) {
-            JTextField textField = (JTextField) input;
+            String phone = ((JTextField)input).getText();
 
-            if(textField.getText().length() != 0){
+            return validatePhone(phone);
+        }
+    }
 
-                if(textField.getText().length()  >= 15){
-                    phoneValidationLabel.setText(Constants.PHONE_SIZE_ERROR);
+    private boolean validatePhone(String phone) {
+        if(phone.length() != 0){
+
+            if(phone.length()  >= 15){
+                phoneValidationLabel.setText(Constants.PHONE_SIZE_ERROR);
+                return false;
+            }
+            else {
+                if(!(phoneValidator.validate(phone))){
+                    phoneValidationLabel.setText(Constants.PHONE_FORMAT_ERROR);
                     return false;
                 }
-                else {
-                    if(!(phoneValidator.validate(textField.getText()))){
-                        phoneValidationLabel.setText(Constants.PHONE_FORMAT_ERROR);
-                        return false;
-                    }
-                    else{
-                        phoneValidationLabel.setText(Constants.EMPTY_STRING);
-                        return true;
-                    }
+                else{
+                    phoneValidationLabel.setText(Constants.EMPTY_STRING);
+                    return true;
                 }
             }
-            else{
-                phoneValidationLabel.setText(Constants.EMPTY_STRING);
-                return true;
-            }
+        }
+        else{
+            phoneValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
         }
     }
 
     private class EmailInputVerifier extends InputVerifier{
         @Override
         public boolean verify(JComponent input) {
-            JTextField textField = (JTextField) input;
+            String email = ((JTextField)input).getText();
 
-            if(textField.getText().length() != 0){
-                if(emailValidator.validate(textField.getText())){
-                    emailValidationLabel.setText(Constants.EMPTY_STRING);
-                    return true;
-                }
-                else{
-                    emailValidationLabel.setText(Constants.EMAIL_FORMAT_ERROR);
-                    return  false;
-                }
-            }
-            else{
+            return validateEmail(email);
+        }
+    }
+
+    private boolean validateEmail(String email) {
+        if(email.length() != 0){
+            if(emailValidator.validate(email)){
                 emailValidationLabel.setText(Constants.EMPTY_STRING);
                 return true;
             }
+            else{
+                emailValidationLabel.setText(Constants.EMAIL_FORMAT_ERROR);
+                return  false;
+            }
+        }
+        else{
+            emailValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
         }
     }
 
     private class EquipmentInputVerifier extends InputVerifier{
         @Override
         public boolean verify(JComponent input) {
-            if(equipmentComboBox.getSelectedIndex()!=-1){
-                equipmentValidationLabel.setText(Constants.EMPTY_STRING);
-                return true;
-            }
-            else{
-                equipmentValidationLabel.setText(Constants.EQUIPMENT_ERROR);
-                return false;
-            }
+            int selectedEquipment = ((JComboBox)input).getSelectedIndex();
+
+            return validateEquipment(selectedEquipment);
+        }
+    }
+
+    private boolean validateEquipment(int selectedEquipment) {
+        if(selectedEquipment!=-1){
+            equipmentValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
+        }
+        else{
+            equipmentValidationLabel.setText(Constants.EQUIPMENT_ERROR);
+            return false;
         }
     }
 
@@ -641,22 +697,27 @@ public class AffiliatePanel extends JPanel {
         @Override
         public boolean verify(JComponent input) {
 
-            if(trainingGroup1ComboBox.getSelectedIndex()!= -1 && trainingGroup2ComboBox.getSelectedIndex()!= -1) {
+            return validateTrainingGroup();
 
-                if (trainingGroup1ComboBox.getSelectedIndex() == trainingGroup2ComboBox.getSelectedIndex()) {
-                    trainingGroupValidationLabel.setText(Constants.TRAINING_GROUP_ERROR);
-                    return false;
-                }
-                else{
-                    trainingGroupValidationLabel.setText(Constants.EMPTY_STRING);
-                    return true;
-                }
+        }
+    }
+
+    private boolean validateTrainingGroup() {
+        if(trainingGroup1ComboBox.getSelectedIndex()!= 0 && trainingGroup2ComboBox.getSelectedIndex()!= 0) {
+
+
+            if (trainingGroup1ComboBox.getSelectedIndex() == trainingGroup2ComboBox.getSelectedIndex()) {
+                trainingGroupValidationLabel.setText(Constants.TRAINING_GROUP_ERROR);
+                return false;
             }
             else{
                 trainingGroupValidationLabel.setText(Constants.EMPTY_STRING);
                 return true;
             }
-
+        }
+        else{
+            trainingGroupValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
         }
     }
 

@@ -13,6 +13,7 @@ public class Constants {
     public  static  final  String GENDER = "gender";
     public  static  final  String EQUIPMENT = "equipment";
     public static final String AFFILIATEID_SIZE_ERROR = "Affiliate Id should be between 1 and 9999999!";
+    public static final String AFFILIATEID_NOT_NUMERIC = "Affiliate Id should be numeric!";
     public static final String FIRSTNAME_ERROR = "FirstName must contain alphabetic characters";
     public static final String LASTNAME_ERROR = "Lastname  must contain alphabetic characters";
     public static  final String PHONE_FORMAT_ERROR  = "Wrong phone format";
