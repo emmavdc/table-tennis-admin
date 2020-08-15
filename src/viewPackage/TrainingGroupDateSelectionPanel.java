@@ -1,5 +1,6 @@
 package viewPackage;
 
+import commonValidator.DateValidator;
 import controllerPackage.SearchesController;
 import controllerPackage.TrainingController;
 import exceptionPackage.SearchAccessException;
@@ -186,18 +187,9 @@ public class TrainingGroupDateSelectionPanel extends JPanel {
             dateValidationLabel.setText(Constants.EMPTY_STRING);
             trainingGroupValidationLabel.setText(Constants.EMPTY_STRING);
 
-            GregorianCalendar gregorianStartDate;
-            GregorianCalendar gregorianEndDate;
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            try {
-                gregorianStartDate = new GregorianCalendar();
-                gregorianStartDate.setTime(simpleDateFormat.parse(startDateFormatted.getText()));
-                gregorianEndDate = new GregorianCalendar();
-                gregorianEndDate.setTime(simpleDateFormat.parse(endDateFormatted.getText()));
-            } catch (ParseException dateException) {
-                gregorianStartDate = null;
-                gregorianEndDate = null;
-            }
+            GregorianCalendar gregorianStartDate = DateValidator.validateDate(startDate);
+            GregorianCalendar gregorianEndDate = DateValidator.validateDate(endDate);
+
             TrainingGroup trainingGroup = (TrainingGroup) trainingGroupComboBox.getSelectedItem();
 
             if(gregorianStartDate != null && gregorianEndDate != null && trainingGroup != null){
