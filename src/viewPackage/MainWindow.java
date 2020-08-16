@@ -127,15 +127,22 @@ public class MainWindow extends JFrame {
             mainWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
             mainWindow.setVisible(true);
         }
-        catch (EquipmentAccessException e){
-            JOptionPane.showMessageDialog(null, e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
-        } catch (AffiliateAccessException affiliateAccessException) {
-            affiliateAccessException.printStackTrace();
-        }  catch (TrainingAccessException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+        catch (Exception e){
+            // information for programmer
+            e.printStackTrace();
+
+            // information from dialog box for user
+            ExceptionDialog exceptionDialog = new ExceptionDialog();
+            exceptionDialog.setVisible(true);
+
+            ApplicationController applicationController = new ApplicationController();
+            try {
+                applicationController.closingApplication();
+            } catch (CloseApplicationException exception) {
+                exception.printStackTrace();
+            }
+            System.exit(0);
         }
-
-
     }
 
     public void closeCurrentForm() {

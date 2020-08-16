@@ -23,8 +23,10 @@ public class SingletonConnection {
     // close connection
     public static void closeConnection() throws CloseApplicationException {
         try{
-            uniqueConnection.close();
-            uniqueConnection = null;
+            if(uniqueConnection != null){
+                uniqueConnection.close();
+                uniqueConnection = null;
+            }
         }
         catch (SQLException e){
             throw new CloseApplicationException();
