@@ -4,6 +4,8 @@ import controllerPackage.AbsenceController;
 import exceptionPackage.AbsenceAccessException;
 import modelPackage.Absence;
 import modelPackage.Affiliate;
+import utils.Constants;
+import utils.ExceptionHandler;
 import utils.Formating;
 
 import javax.swing.*;
@@ -201,7 +203,7 @@ public class AffiliateAbsenceDialog extends JDialog {
         centerPanel.add(week22);
 
         // empty row
-        centerPanel.add(new JLabel(""));
+        centerPanel.add(new JLabel(Constants.EMPTY_STRING));
 
         setAbsenceText();
 
@@ -314,12 +316,13 @@ public class AffiliateAbsenceDialog extends JDialog {
     private class SaveListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
+
             try {
                 controller.insertAbsences(getAbsences(), affiliate.getAffiliateID());
                 refreshAffiliateData();
                 JOptionPane.showMessageDialog(null, "Absences weeks updated!","Absence management", JOptionPane.INFORMATION_MESSAGE);
             } catch (AbsenceAccessException absenceAccessException) {
-                absenceAccessException.printStackTrace();
+                ExceptionHandler.exitAfterUnhandledException(absenceAccessException);
             }
         }
     }

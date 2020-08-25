@@ -1,6 +1,7 @@
 package businessPackage;
 
 import dataAccessPackage.TrainingDBAccess;
+import dataAccessPackage.TrainingDataAccess;
 import exceptionPackage.TrainingAccessException;
 import modelPackage.TrainingGroup;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 
 public class TrainingManager {
 
-    private TrainingDBAccess trainingDAO;
+    private TrainingDataAccess trainingDAO;
 
 
     public TrainingManager(){

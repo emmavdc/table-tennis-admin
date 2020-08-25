@@ -1,6 +1,7 @@
 package viewPackage.Affiliate;
 
 import exceptionPackage.RankingAccessException;
+import utils.ExceptionHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -69,7 +70,7 @@ public class AffiliateButtonsPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            parent.save();
+           parent.save();
         }
     }
 
@@ -95,7 +96,7 @@ public class AffiliateButtonsPanel extends JPanel {
             try {
                 parent.showRankingDialog(gender);
             } catch (RankingAccessException rankingAccessException) {
-                rankingAccessException.printStackTrace();
+                ExceptionHandler.exitAfterUnhandledException(rankingAccessException);
             }
         }
     }

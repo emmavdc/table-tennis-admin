@@ -9,10 +9,10 @@ public class Absence {
     private Affiliate affiliate;
 
     public Absence(Integer absenceID, Integer weekNumber, String description, Integer affiliateID){
-        setAbsenceID(absenceID);
-        setWeekNumber(weekNumber);
-        setDescription(description);
-        setAffiliateID(affiliateID);
+        this.absenceID = absenceID;
+        this.weekNumber =  weekNumber;
+        this.description = description;
+        this.affiliateID = affiliateID;
     }
 
     // Getters
@@ -33,22 +33,6 @@ public class Absence {
         return affiliate;
     }
     // Setters
-
-    public void setAbsenceID(Integer absenceID) {
-        this.absenceID = absenceID;
-    }
-
-    public void setWeekNumber(Integer weekNumber) {
-        this.weekNumber = weekNumber;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setAffiliateID(Integer affiliateID) {
-        this.affiliateID = affiliateID;
-    }
 
     public void setAffiliate(Affiliate affiliate) {
         this.affiliate = affiliate;

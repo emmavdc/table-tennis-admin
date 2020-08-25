@@ -1,10 +1,15 @@
 package viewPackage.Affiliate;
 
+import commonValidator.EmailValidator;
+import commonValidator.NameValidator;
+import commonValidator.PhoneValidator;
 import controllerPackage.EquipmentController;
 import controllerPackage.TrainingController;
 import exceptionPackage.EquipmentAccessException;
 import exceptionPackage.TrainingAccessException;
 import modelPackage.*;
+import utils.Constants;
+import commonValidator.DateValidator;
 import utils.Formating;
 
 import javax.swing.*;
@@ -13,9 +18,7 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.GregorianCalendar;
+import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,11 +40,19 @@ public class AffiliatePanel extends JPanel {
     private ArrayList<Equipment> equipments;
     private ArrayList<TrainingGroup> trainingGroups;
     private Formating formatingHelper;
+    private NameValidator nameValidator;
+    private EmailValidator emailValidator;
+    private PhoneValidator phoneValidator;
 
     public AffiliatePanel() throws EquipmentAccessException, TrainingAccessException {
 
+        nameValidator = new NameValidator();
+        emailValidator = new EmailValidator();
+        phoneValidator = new PhoneValidator();
+
         formatingHelper = new Formating();
 
+        // vertical and horizontal padding
         this.setBorder(new EmptyBorder(20, 30, 20, 30));
         this.setLayout(new GridLayout(27, 2, 2, 5));
 
@@ -49,17 +60,19 @@ public class AffiliatePanel extends JPanel {
         formatingHelper.formatTitleLabel(modeLabel);
 
         this.add(modeLabel);
-        this.add(new JLabel(""));
+        this.add(new JLabel(Constants.EMPTY_STRING));
 
         affiliateIdLabel = new JLabel("Affiliate Id :");
         affiliateIdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(affiliateIdLabel);
         affiliateId = new JTextField(7);
+        affiliateId.setInputVerifier(new AffiliateIdInputVerifier());
+
         affiliateId.setColumns(7);
         this.add(affiliateId);
         //first column is empty
-        this.add(new JLabel(""));
-        affiliateIdValidationLabel = new JLabel("");
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        affiliateIdValidationLabel = new JLabel(Constants.EMPTY_STRING);
         affiliateIdValidationLabel.setForeground(Color.RED);
         this.add(affiliateIdValidationLabel);
 
@@ -68,10 +81,12 @@ public class AffiliatePanel extends JPanel {
         firstNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(firstNameLabel);
         firstName = new JTextField(30);
+        // verify input
+        firstName.setInputVerifier(new FirstNameInputVerifier());
         this.add(firstName);
         //first column is empty
-        this.add(new JLabel(""));
-        firstNameValidationLabel = new JLabel("");
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        firstNameValidationLabel = new JLabel(Constants.EMPTY_STRING);
         firstNameValidationLabel.setForeground(Color.RED);
         this.add(firstNameValidationLabel);
 
@@ -79,10 +94,12 @@ public class AffiliatePanel extends JPanel {
         lastNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(lastNameLabel);
         lastName = new JTextField(30);
+        // verify input
+        lastName.setInputVerifier(new LastNameInputVerifier());
         this.add(lastName);
         //first column is empty
-        this.add(new JLabel(""));
-        lastNameValidationLabel = new JLabel("");
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        lastNameValidationLabel = new JLabel(Constants.EMPTY_STRING);
         lastNameValidationLabel.setForeground(Color.RED);
         this.add(lastNameValidationLabel);
 
@@ -93,8 +110,10 @@ public class AffiliatePanel extends JPanel {
         genderComboBox = new JComboBox(values);
         genderComboBox.setSelectedIndex(-1);
         genderComboBox.setMaximumRowCount(3);
+        // verify input
+        genderComboBox.setInputVerifier(new GenderInputVerifier());
         this.add(genderComboBox);
-        this.add(new JLabel(""));
+        this.add(new JLabel(Constants.EMPTY_STRING));
         genderValidationLabel = new JLabel();
         genderValidationLabel.setForeground(Color.RED);
         this.add(genderValidationLabel);
@@ -110,10 +129,12 @@ public class AffiliatePanel extends JPanel {
         } catch (ParseException e) {
         }
         birthDate = new JFormattedTextField(birthDateMask);
-        add(birthDate);
+        //verify input
+        birthDate.setInputVerifier(new BirthDateInputVerifier());
+        this.add(birthDate);
         //first column is empty
-        this.add(new JLabel(""));
-        birthDateValidationLabel = new JLabel("");
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        birthDateValidationLabel = new JLabel(Constants.EMPTY_STRING);
         birthDateValidationLabel.setForeground(Color.RED);
         this.add(birthDateValidationLabel);
 
@@ -121,10 +142,12 @@ public class AffiliatePanel extends JPanel {
         phoneLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(phoneLabel);
         phone = new JTextField(30);
+        //verify input
+        phone.setInputVerifier(new PhoneInputVerifier());
         this.add(phone);
         //first column is empty
-        this.add(new JLabel(""));
-        phoneValidationLabel = new JLabel("");
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        phoneValidationLabel = new JLabel(Constants.EMPTY_STRING);
         phoneValidationLabel.setForeground(Color.RED);
         this.add(phoneValidationLabel);
 
@@ -132,10 +155,12 @@ public class AffiliatePanel extends JPanel {
         emailLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(emailLabel);
         email = new JTextField(30);
+        //verify input
+        email.setInputVerifier(new EmailInputVerifier());
         this.add(email);
         //first column is empty
-        this.add(new JLabel(""));
-        emailValidationLabel = new JLabel("");
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        emailValidationLabel = new JLabel(Constants.EMPTY_STRING);
         emailValidationLabel.setForeground(Color.RED);
         this.add(emailValidationLabel);
 
@@ -145,8 +170,8 @@ public class AffiliatePanel extends JPanel {
         playCompetitionCheckBox = new JCheckBox();
         this.add(playCompetitionCheckBox);
 
-        this.add(new JLabel(""));
-        this.add(new JLabel(""));
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        this.add(new JLabel(Constants.EMPTY_STRING));
 
         equipmentLabel = new JLabel("Equipment :");
         equipmentLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -156,10 +181,12 @@ public class AffiliatePanel extends JPanel {
         equipmentComboBox = new JComboBox(equipments.toArray());
         equipmentComboBox.setSelectedIndex(-1);
         equipmentComboBox.setMaximumRowCount(5);
+        //verify input
+        equipmentComboBox.setInputVerifier(new EquipmentInputVerifier());
         this.add(equipmentComboBox);
 
-        this.add(new JLabel(""));
-        equipmentValidationLabel = new JLabel("");
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        equipmentValidationLabel = new JLabel(Constants.EMPTY_STRING);
         equipmentValidationLabel.setForeground(Color.RED);
         this.add(equipmentValidationLabel);
 
@@ -171,19 +198,23 @@ public class AffiliatePanel extends JPanel {
         trainingGroups = trainingController.getAllTrainingGroups();
 
         trainingGroup1ComboBox = new JComboBox(trainingGroups.toArray());
-        trainingGroup1ComboBox.insertItemAt("", 0);
+        trainingGroup1ComboBox.insertItemAt(Constants.EMPTY_STRING, 0);
         trainingGroup1ComboBox.setSelectedIndex(0);
         trainingGroup1ComboBox.setMaximumRowCount(5);
+        //verify input
+        trainingGroup1ComboBox.setInputVerifier(new TrainingGroupInputVerifier());
         this.add(trainingGroup1ComboBox);
-        this.add(new JLabel(""));
+        this.add(new JLabel(Constants.EMPTY_STRING));
 
         trainingGroup2ComboBox = new JComboBox(trainingGroups.toArray());
-        trainingGroup2ComboBox.insertItemAt("", 0);
+        trainingGroup2ComboBox.insertItemAt(Constants.EMPTY_STRING, 0);
         trainingGroup2ComboBox.setSelectedIndex(0);
         trainingGroup2ComboBox.setMaximumRowCount(5);
+        //verify input
+        trainingGroup2ComboBox.setInputVerifier(new TrainingGroupInputVerifier());
         this.add(trainingGroup2ComboBox);
-        this.add(new JLabel(""));
-        trainingGroupValidationLabel = new JLabel("");
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        trainingGroupValidationLabel = new JLabel(Constants.EMPTY_STRING);
         trainingGroupValidationLabel.setForeground(Color.RED);
         this.add(trainingGroupValidationLabel);
 
@@ -192,51 +223,51 @@ public class AffiliatePanel extends JPanel {
         manRankingLabel.setVisible(false);
         this.add(manRankingLabel);
 
-        manRanking = new JLabel("");
+        manRanking = new JLabel(Constants.EMPTY_STRING);
         this.add(manRanking);
 
-        this.add(new JLabel(""));
-        this.add(new JLabel(""));
+        this.add(new JLabel(Constants.EMPTY_STRING));
+        this.add(new JLabel(Constants.EMPTY_STRING));
 
         womanRankingLabel = new JLabel("Woman Ranking :");
         womanRankingLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         womanRankingLabel.setVisible(false);
         this.add(womanRankingLabel);
 
-        womanRanking = new JLabel("");
+        womanRanking = new JLabel(Constants.EMPTY_STRING);
         this.add(womanRanking);
 
     }
 
     public void reset() {
-        affiliateId.setText("");
+        affiliateId.setText(Constants.EMPTY_STRING);
         affiliateId.setEnabled(true);
-        firstName.setText("");
-        lastName.setText("");
-        email.setText("");
-        phone.setText("");
-        birthDate.setText("");
+        firstName.setText(Constants.EMPTY_STRING);
+        lastName.setText(Constants.EMPTY_STRING);
+        email.setText(Constants.EMPTY_STRING);
+        phone.setText(Constants.EMPTY_STRING);
+        birthDate.setText(Constants.EMPTY_STRING);
         genderComboBox.setSelectedIndex(-1);
         equipmentComboBox.setSelectedIndex(-1);
         trainingGroup1ComboBox.setSelectedIndex(0);
         trainingGroup2ComboBox.setSelectedIndex(0);
-        womanRanking.setText("");
-        manRanking.setText("");
+        womanRanking.setText(Constants.EMPTY_STRING);
+        manRanking.setText(Constants.EMPTY_STRING);
         manRankingLabel.setVisible(false);
         womanRankingLabel.setVisible(false);
         resetValidation();
     }
 
     public void resetValidation() {
-        affiliateIdValidationLabel.setText("");
-        firstNameValidationLabel.setText("");
-        lastNameValidationLabel.setText("");
-        emailValidationLabel.setText("");
-        phoneValidationLabel.setText("");
-        birthDateValidationLabel.setText("");
-        trainingGroupValidationLabel.setText("");
-        genderValidationLabel.setText("");
-        equipmentValidationLabel.setText("");
+        affiliateIdValidationLabel.setText(Constants.EMPTY_STRING);
+        firstNameValidationLabel.setText(Constants.EMPTY_STRING);
+        lastNameValidationLabel.setText(Constants.EMPTY_STRING);
+        emailValidationLabel.setText(Constants.EMPTY_STRING);
+        phoneValidationLabel.setText(Constants.EMPTY_STRING);
+        birthDateValidationLabel.setText(Constants.EMPTY_STRING);
+        trainingGroupValidationLabel.setText(Constants.EMPTY_STRING);
+        genderValidationLabel.setText(Constants.EMPTY_STRING);
+        equipmentValidationLabel.setText(Constants.EMPTY_STRING);
     }
 
     public Affiliate getAffiliate() {
@@ -244,16 +275,11 @@ public class AffiliatePanel extends JPanel {
         Affiliate affiliate;
 
         int affiliateIdNumber;
-        try {
-            affiliateIdNumber = Integer.parseInt(affiliateId.getText());
-        } catch (Exception e) {
-            //if the id is not numeric then set a bad value which will be validated to false into the business layer
-            affiliateIdNumber = -1;
-        }
+        affiliateIdNumber = Integer.parseInt(affiliateId.getText());
 
         GregorianCalendar gregorianBirthDate;
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
         try {
             gregorianBirthDate = new GregorianCalendar();
             gregorianBirthDate.setTime(simpleDateFormat.parse(birthDate.getText()));
@@ -261,7 +287,7 @@ public class AffiliatePanel extends JPanel {
             gregorianBirthDate = null;
         }
 
-        String selectedGender="";
+        String selectedGender = Constants.EMPTY_STRING;
         if (genderComboBox.getSelectedIndex()!=-1) {
             selectedGender = genderComboBox.getSelectedItem().toString().substring(0, 1);
         }
@@ -274,8 +300,9 @@ public class AffiliatePanel extends JPanel {
                 selectedGender, gregorianBirthDate,
                 playCompetitionCheckBox.isSelected(), selectedEquipment);
 
-        affiliate.setPhone(phone.getText());
-        affiliate.setEmail(email.getText());
+        if(!(phone.getText().equals(Constants.EMPTY_STRING))) affiliate.setPhone(phone.getText());
+        if(!(email.getText().equals(Constants.EMPTY_STRING))) affiliate.setEmail(email.getText());
+
 
         affiliate.setTrainings(new ArrayList<Training>());
 
@@ -397,31 +424,31 @@ public class AffiliatePanel extends JPanel {
 
     public void setValidationResult(ArrayList<ValidationResult> validationResults) {
         for (ValidationResult validationResult : validationResults) {
-            if (validationResult.getElementValidated() == "AFFILIATEID") {
+            if (validationResult.getElementValidated() == Constants.AFFILIATEID) {
                 affiliateIdValidationLabel.setText(validationResult.getMessage());
             }
-            if (validationResult.getElementValidated() == "FIRSTNAME") {
+            if (validationResult.getElementValidated() == Constants.FIRSTNAME) {
                 firstNameValidationLabel.setText(validationResult.getMessage());
             }
-            if (validationResult.getElementValidated() == "LASTNAME") {
+            if (validationResult.getElementValidated() == Constants.LASTNAME) {
                 lastNameValidationLabel.setText(validationResult.getMessage());
             }
-            if (validationResult.getElementValidated() == "PHONE") {
+            if (validationResult.getElementValidated() == Constants.PHONE) {
                 phoneValidationLabel.setText(validationResult.getMessage());
             }
-            if (validationResult.getElementValidated() == "EMAIL") {
+            if (validationResult.getElementValidated() == Constants.EMAIL) {
                 emailValidationLabel.setText(validationResult.getMessage());
             }
-            if (validationResult.getElementValidated() == "BIRTHDATE") {
+            if (validationResult.getElementValidated() == Constants.BIRTHDATE) {
                 birthDateValidationLabel.setText(validationResult.getMessage());
             }
-            if (validationResult.getElementValidated() == "TRAININGS") {
+            if (validationResult.getElementValidated() == Constants.TRAININGS) {
                 trainingGroupValidationLabel.setText(validationResult.getMessage());
             }
-            if (validationResult.getElementValidated() == "GENDER") {
+            if (validationResult.getElementValidated() == Constants.GENDER) {
                 genderValidationLabel.setText(validationResult.getMessage());
             }
-            if (validationResult.getElementValidated() == "EQUIPMENT") {
+            if (validationResult.getElementValidated() == Constants.EQUIPMENT) {
                 equipmentValidationLabel.setText(validationResult.getMessage());
             }
         }
@@ -446,5 +473,253 @@ public class AffiliatePanel extends JPanel {
                 break;
         }
     }
+
+
+    public boolean validateForm() {
+
+        boolean isFormValidated = true;
+
+        if (!validateAffiliateId(affiliateId.getText())) isFormValidated = false;
+        if (!validateFirstName(firstName.getText())) isFormValidated = false;
+        if (!validateLastName(lastName.getText())) isFormValidated = false;
+        if (!validateGender(genderComboBox.getSelectedIndex())) isFormValidated = false;
+        if (!validateBirthDate(birthDate.getText())) isFormValidated = false;
+        if (!validatePhone(phone.getText())) isFormValidated = false;
+        if (!validateEmail(email.getText())) isFormValidated = false;
+        if (!validateEquipment(equipmentComboBox.getSelectedIndex())) isFormValidated = false;
+        if (!validateTrainingGroup()) isFormValidated = false;
+
+        return isFormValidated;
+    }
+
+    private  class AffiliateIdInputVerifier extends InputVerifier{
+        @Override
+        public boolean verify(JComponent input) {
+
+            return validateAffiliateId(((JTextField)input).getText());
+        }
+    }
+
+    private boolean validateAffiliateId(String affiliateId) {
+        int affiliateIdInt;
+        try {
+            affiliateIdInt = Integer.parseInt(affiliateId);
+        } catch (NumberFormatException e) {
+            affiliateIdValidationLabel.setText(Constants.AFFILIATEID_NOT_NUMERIC);
+            return false;
+        }
+
+        if(affiliateIdInt <= 0 || affiliateIdInt > 9999999) {
+
+            affiliateIdValidationLabel.setText(Constants.AFFILIATEID_SIZE_ERROR);
+            return false;
+        }
+        else{
+            affiliateIdValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
+        }
+    }
+
+    private class FirstNameInputVerifier extends InputVerifier{
+
+        @Override
+        public boolean verify(JComponent input) {
+            String firstName = ((JTextField)input).getText();
+
+            return validateFirstName(firstName);
+        }
+    }
+
+    private boolean validateFirstName(String firstName) {
+        if(nameValidator.validate(firstName)) {
+            firstNameValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
+        }
+        else{
+            firstNameValidationLabel.setText(Constants.FIRSTNAME_ERROR);
+            return  false;
+        }
+    }
+
+    private class LastNameInputVerifier extends InputVerifier{
+
+        @Override
+        public boolean verify(JComponent input) {
+            String lastName = ((JTextField)input).getText();
+
+            return validateLastName(lastName);
+        }
+    }
+
+    private boolean validateLastName(String lastName) {
+        if(nameValidator.validate(lastName)){
+            lastNameValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
+        }
+        else{
+            lastNameValidationLabel.setText(Constants.LASTNAME_ERROR);
+            return  false;
+        }
+    }
+
+    private class GenderInputVerifier extends  InputVerifier{
+
+        @Override
+        public boolean verify(JComponent input) {
+
+            int selectedIndex = ((JComboBox)input).getSelectedIndex();
+
+            return validateGender(selectedIndex);
+        }
+    }
+
+    private boolean validateGender(int selectedIndex) {
+        if(selectedIndex!=-1){
+            genderValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
+        }
+        else{
+            genderValidationLabel.setText(Constants.GENDER_ERROR);
+            return false;
+        }
+    }
+
+    private class BirthDateInputVerifier extends InputVerifier{
+        @Override
+        public boolean verify(JComponent input) {
+            String birthDate = ((JTextField)input).getText();
+
+            return validateBirthDate(birthDate);
+        }
+    }
+
+    private boolean validateBirthDate(String birthDate) {
+        Calendar c = Calendar.getInstance();
+        int year  = c.get(Calendar.YEAR) - 4;
+
+        GregorianCalendar javaDate = DateValidator.validateDate(birthDate);
+
+        if(javaDate != null){
+
+            if(javaDate.get(Calendar.YEAR) <= 1900 || javaDate.get(Calendar.YEAR) > year){
+                birthDateValidationLabel.setText("birthDate should be >1900 and <= " + year);
+                return false;
+            }
+            birthDateValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
+        }
+        else{
+            birthDateValidationLabel.setText(Constants.DATE_FORMAT_ERROR);
+            return false;
+        }
+    }
+
+    private class PhoneInputVerifier extends InputVerifier{
+        @Override
+        public boolean verify(JComponent input) {
+            String phone = ((JTextField)input).getText();
+
+            return validatePhone(phone);
+        }
+    }
+
+    private boolean validatePhone(String phone) {
+        if(phone.length() != 0){
+
+            if(phone.length()  >= 15){
+                phoneValidationLabel.setText(Constants.PHONE_SIZE_ERROR);
+                return false;
+            }
+            else {
+                if(!(phoneValidator.validate(phone))){
+                    phoneValidationLabel.setText(Constants.PHONE_FORMAT_ERROR);
+                    return false;
+                }
+                else{
+                    phoneValidationLabel.setText(Constants.EMPTY_STRING);
+                    return true;
+                }
+            }
+        }
+        else{
+            phoneValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
+        }
+    }
+
+    private class EmailInputVerifier extends InputVerifier{
+        @Override
+        public boolean verify(JComponent input) {
+            String email = ((JTextField)input).getText();
+
+            return validateEmail(email);
+        }
+    }
+
+    private boolean validateEmail(String email) {
+        if(email.length() != 0){
+            if(emailValidator.validate(email)){
+                emailValidationLabel.setText(Constants.EMPTY_STRING);
+                return true;
+            }
+            else{
+                emailValidationLabel.setText(Constants.EMAIL_FORMAT_ERROR);
+                return  false;
+            }
+        }
+        else{
+            emailValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
+        }
+    }
+
+    private class EquipmentInputVerifier extends InputVerifier{
+        @Override
+        public boolean verify(JComponent input) {
+            int selectedEquipment = ((JComboBox)input).getSelectedIndex();
+
+            return validateEquipment(selectedEquipment);
+        }
+    }
+
+    private boolean validateEquipment(int selectedEquipment) {
+        if(selectedEquipment!=-1){
+            equipmentValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
+        }
+        else{
+            equipmentValidationLabel.setText(Constants.EQUIPMENT_ERROR);
+            return false;
+        }
+    }
+
+    private class TrainingGroupInputVerifier extends InputVerifier{
+        @Override
+        public boolean verify(JComponent input) {
+
+            return validateTrainingGroup();
+
+        }
+    }
+
+    private boolean validateTrainingGroup() {
+        if(trainingGroup1ComboBox.getSelectedIndex()!= 0 && trainingGroup2ComboBox.getSelectedIndex()!= 0) {
+
+
+            if (trainingGroup1ComboBox.getSelectedIndex() == trainingGroup2ComboBox.getSelectedIndex()) {
+                trainingGroupValidationLabel.setText(Constants.TRAINING_GROUP_ERROR);
+                return false;
+            }
+            else{
+                trainingGroupValidationLabel.setText(Constants.EMPTY_STRING);
+                return true;
+            }
+        }
+        else{
+            trainingGroupValidationLabel.setText(Constants.EMPTY_STRING);
+            return true;
+        }
+    }
+
 
 }

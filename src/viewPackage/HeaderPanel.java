@@ -3,6 +3,7 @@ package viewPackage;
 import controllerPackage.TrainingController;
 import exceptionPackage.TrainingAccessException;
 import modelPackage.TrainingGroup;
+import utils.ExceptionHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +30,7 @@ public class HeaderPanel extends JPanel {
 
         }
         catch(TrainingAccessException e){
-            JOptionPane.showMessageDialog(null, e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+           ExceptionHandler.exitAfterUnhandledException(e);
         }
 
     }
@@ -45,6 +46,7 @@ public class HeaderPanel extends JPanel {
                     if (i == trainings.size()) i = 0;
                 }
                 catch (Exception e) {
+                    ExceptionHandler.exitAfterUnhandledException(e);
                 }
             }
         }

@@ -6,8 +6,8 @@ public class Ranking {
     private String name;
 
     public Ranking(Integer rankingID, String name){
-        setRankingID(rankingID);
-        setName(name);
+        this.rankingID = rankingID;
+        this.name = name;
     }
 
     public Integer getRankingID() {
@@ -16,14 +16,6 @@ public class Ranking {
 
     public String getName() {
         return name;
-    }
-
-    public void setRankingID(Integer rankingID) {
-        this.rankingID = rankingID;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String toString(){

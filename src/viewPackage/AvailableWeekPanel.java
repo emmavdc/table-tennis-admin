@@ -5,6 +5,8 @@ import controllerPackage.SearchesController;
 import exceptionPackage.RankingAccessException;
 import exceptionPackage.SearchAccessException;
 import modelPackage.*;
+import utils.Constants;
+import utils.ExceptionHandler;
 import utils.Formating;
 
 import javax.swing.*;
@@ -20,7 +22,7 @@ public class AvailableWeekPanel extends JPanel {
     private SearchesController searchesController;
     private MainWindow parent;
     private AllAffiliatesAvailableWeek model;
-    private JLabel rankingLabel, weekLabel, titleLabel, seasonLabel;
+    private JLabel rankingLabel, weekLabel, titleLabel, seasonLabel, weekValidationLabel, rankingValidationLabel;
     private JButton selectButton, closeButton;
     private JComboBox rankingComboBox, weekComboBox;
     private JTable table;
@@ -71,8 +73,13 @@ public class AvailableWeekPanel extends JPanel {
             rankingComboBox.setMaximumRowCount(5);
             comboPanel.add(rankingComboBox);
         } catch (RankingAccessException e) {
-            e.printStackTrace();
+            ExceptionHandler.exitAfterUnhandledException(e);
         }
+
+        rankingValidationLabel = new JLabel(Constants.EMPTY_STRING);
+        rankingValidationLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        rankingValidationLabel.setForeground(Color.RED);
+        comboPanel.add(rankingValidationLabel);
 
         weekLabel = new JLabel("Week :");
         weekLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -84,6 +91,11 @@ public class AvailableWeekPanel extends JPanel {
         weekComboBox.setMaximumRowCount(5);
         comboPanel.add(weekComboBox);
 
+        weekValidationLabel = new JLabel(Constants.EMPTY_STRING);
+        weekValidationLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        weekValidationLabel.setForeground(Color.RED);
+        comboPanel.add(weekValidationLabel);
+
 
         selectButton = new JButton("Select");
         selectButton.addActionListener(new SelectListener());
@@ -92,8 +104,8 @@ public class AvailableWeekPanel extends JPanel {
 
         // third fourth and fifth row in the top panel
         topPanel.add(comboPanel);
-        topPanel.add(new JLabel(""));
-        topPanel.add(new JLabel(""));
+        topPanel.add(new JLabel(Constants.EMPTY_STRING));
+        topPanel.add(new JLabel(Constants.EMPTY_STRING));
 
 
         add(topPanel, BorderLayout.NORTH);
@@ -125,6 +137,9 @@ public class AvailableWeekPanel extends JPanel {
         weekComboBox.setSelectedIndex(-1);
         model.setContents(new ArrayList<AffiliateAvailableWeek>());
         model.fireTableDataChanged();
+
+        weekValidationLabel.setText(Constants.EMPTY_STRING);
+        rankingValidationLabel.setText(Constants.EMPTY_STRING);
     }
 
     private void setCurrentSeason(){
@@ -133,8 +148,8 @@ public class AvailableWeekPanel extends JPanel {
         this.lastYear  = c.get(Calendar.YEAR)-1;
         this.currentYear = c.get(Calendar.YEAR);
 
-        // new table tennis season begins in SEPTEMBER !
-        if(currentMonth >= Calendar.SEPTEMBER){
+        // new table tennis season begins in OCTOBER !
+        if(currentMonth >= Calendar.OCTOBER){
             this.lastYear = this.currentYear;
             this.currentYear++;
         }
@@ -143,24 +158,39 @@ public class AvailableWeekPanel extends JPanel {
     private class SelectListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            rankingValidationLabel.setText(Constants.EMPTY_STRING);
+            weekValidationLabel.setText(Constants.EMPTY_STRING);
+
             if(tablePanel != null) remove(tablePanel);
             Ranking ranking = (Ranking) rankingComboBox.getSelectedItem();
-            int weekNumber = Integer.parseInt((String) weekComboBox.getSelectedItem());
-
-            Calendar c = Calendar.getInstance();
-            int currentYear = c.get(Calendar.YEAR);
-            int currentMonth = c.get(Calendar.MONTH) + 1;
-            int currentSeason;
-            // new table tennis season begins in SEPTEMBER !
-            if (currentMonth < Calendar.SEPTEMBER) currentSeason = currentYear - 1;
-            else currentSeason = currentYear;
-
+            int weekNumber;
             try{
-                model.setContents(searchesController.getAllAffiliatesAvailableWeek(weekNumber, ranking.getName(), currentSeason));
-                model.fireTableDataChanged();
+                weekNumber = Integer.parseInt((String) weekComboBox.getSelectedItem());
+            } catch (NumberFormatException numberFormatException) {
+                weekNumber = -1;
             }
-            catch (SearchAccessException s){
 
+            if(weekNumber != -1 && ranking != null){
+                Calendar c = Calendar.getInstance();
+                int currentYear = c.get(Calendar.YEAR);
+                int currentMonth = c.get(Calendar.MONTH);
+                int currentSeason;
+                // new table tennis season begins in OCTOBER !
+                if (currentMonth < Calendar.OCTOBER) currentSeason = currentYear - 1;
+                else currentSeason = currentYear;
+
+                try{
+                    model.setContents(searchesController.getAllAffiliatesAvailableWeek(weekNumber, ranking.getName(), currentSeason));
+                    model.fireTableDataChanged();
+                }
+                catch (SearchAccessException s){
+                    ExceptionHandler.exitAfterUnhandledException(s);
+                }
+            }
+            else{
+                if(weekNumber == -1) weekValidationLabel.setText("please select a week!!");
+                if(ranking == null) rankingValidationLabel.setText("please select ranking!!");
             }
 
         }

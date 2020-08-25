@@ -1,18 +1,24 @@
 package businessPackage;
 
 
+import commonValidator.EmailValidator;
+import commonValidator.NameValidator;
+import commonValidator.PhoneValidator;
 import dataAccessPackage.AffiliateDBAccess;
+import dataAccessPackage.AffiliateDataAccess;
 import exceptionPackage.AbsenceAccessException;
 import exceptionPackage.AffiliateAccessException;
 import exceptionPackage.RankingAccessException;
 import modelPackage.Affiliate;
 import modelPackage.ValidationResult;
+import utils.Constants;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AffiliateManager {
 
-    private AffiliateDBAccess affiliateDAO;
+    private AffiliateDataAccess affiliateDAO;
     private EmailValidator emailValidator;
     private PhoneValidator phoneValidator;
     private NameValidator nameValidator;
@@ -25,7 +31,7 @@ public class AffiliateManager {
         phoneValidator = new PhoneValidator();
         nameValidator = new NameValidator();
         Calendar c = Calendar.getInstance();
-        this.year  = c.get(Calendar.YEAR);
+        this.year  = c.get(Calendar.YEAR) - 4;
     }
 
     public ArrayList<ValidationResult> insertAffiliate(Affiliate affiliate) throws AffiliateAccessException {
@@ -66,51 +72,51 @@ public class AffiliateManager {
         ArrayList<ValidationResult> validationResult = new ArrayList<ValidationResult>();
 
         if (affiliate.getAffiliateID() <= 0 || affiliate.getAffiliateID() > 9999999) {
-            validationResult.add(new ValidationResult("AFFILIATEID", "Affiliate Id should be between 1 and 9999999!"));
+            validationResult.add(new ValidationResult(Constants.AFFILIATEID, Constants.AFFILIATEID_SIZE_ERROR));
         }
         if(!(nameValidator.validate(affiliate.getFirstName()))){
-            validationResult.add(new ValidationResult("FIRSTNAME", "FirstName must contain alphabetic characters"));
+            validationResult.add(new ValidationResult(Constants.FIRSTNAME, Constants.FIRSTNAME_ERROR));
         }
         if(!(nameValidator.validate(affiliate.getLastName()))){
-            validationResult.add(new ValidationResult("LASTNAME", "Lastname must contain alphabetic characters"));
+            validationResult.add(new ValidationResult(Constants.LASTNAME, Constants.LASTNAME_ERROR));
         }
-        if(affiliate.getPhone().length() != 0){
+        if(affiliate.getPhone() != null && affiliate.getPhone().length() != 0){
 
             if(affiliate.getPhone().length() >= 15){
-                validationResult.add(new ValidationResult("PHONE", "Phone should be < 15 digits !"));
+                validationResult.add(new ValidationResult(Constants.PHONE, Constants.PHONE_SIZE_ERROR));
             }
             else {
                 if(!(phoneValidator.validate(affiliate.getPhone()))){
-                    validationResult.add(new ValidationResult("PHONE", "Wrong phone format"));
+                    validationResult.add(new ValidationResult(Constants.PHONE, Constants.PHONE_FORMAT_ERROR));
                 }
             }
         }
-        if(affiliate.getEmail().length() != 0){
+        if( affiliate.getEmail() != null && affiliate.getEmail().length() != 0){
             if(!(emailValidator.validate(affiliate.getEmail()))){
-                validationResult.add(new ValidationResult("EMAIL", "Wrong email format"));
+                validationResult.add(new ValidationResult(Constants.EMAIL, Constants.EMAIL_FORMAT_ERROR));
             }
         }
 
         if(affiliate.getBirthDate() == null) {
-            validationResult.add(new ValidationResult("BIRTHDATE", "Wrong birthdate format"));
+            validationResult.add(new ValidationResult(Constants.BIRTHDATE, Constants.DATE_FORMAT_ERROR));
         }
         else{
             if(affiliate.getBirthDate().get(Calendar.YEAR) <= 1900 || affiliate.getBirthDate().get(Calendar.YEAR) > year){
-                validationResult.add(new ValidationResult("BIRTHDATE", "birthDate should be >1900 and < " + year));
+                validationResult.add(new ValidationResult(Constants.BIRTHDATE, "birthDate should be >1900 and <= " + year));
             }
         }
 
         if(affiliate.getTrainings().size() == 2) {
             if (affiliate.getTrainings().get(0).getTrainingGroupId().intValue()
                     == affiliate.getTrainings().get(1).getTrainingGroupId().intValue()) {
-                validationResult.add(new ValidationResult("TRAININGS", "The second training day should be different!"));
+                validationResult.add(new ValidationResult(Constants.TRAININGS, Constants.TRAINING_GROUP_ERROR));
             }
         }
         if (affiliate.getGender().isEmpty()) {
-            validationResult.add(new ValidationResult("GENDER", "Select a gender!"));
+            validationResult.add(new ValidationResult(Constants.GENDER, Constants.GENDER_ERROR));
         }
         if (affiliate.getEquipment() == null) {
-            validationResult.add(new ValidationResult("EQUIPMENT", "Select an equipment!"));
+            validationResult.add(new ValidationResult(Constants.EQUIPMENT, Constants.EQUIPMENT_ERROR));
         }
         return validationResult;
     }
