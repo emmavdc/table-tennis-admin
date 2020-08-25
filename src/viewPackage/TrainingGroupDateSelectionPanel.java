@@ -9,6 +9,7 @@ import modelPackage.AffiliateInTrainingBirthDate;
 import modelPackage.AllAffiliatesTrainingDateModel;
 import modelPackage.TrainingGroup;
 import utils.Constants;
+import utils.ExceptionHandler;
 import utils.Formating;
 
 import javax.swing.*;
@@ -17,7 +18,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -110,7 +110,7 @@ public class TrainingGroupDateSelectionPanel extends JPanel {
             trainingGroupComboBox.setMaximumRowCount(5);
             comboPanel.add(trainingGroupComboBox);
         } catch (TrainingAccessException e) {
-            e.printStackTrace();
+          ExceptionHandler.exitAfterUnhandledException(e);
         }
 
         trainingGroupValidationLabel = new JLabel(Constants.EMPTY_STRING);
@@ -206,7 +206,7 @@ public class TrainingGroupDateSelectionPanel extends JPanel {
                     model.setContents(searchesController.getAllAffiliatesInTrainingAccordingBirthDate(trainingGroup.getTrainingGroupID(), currentSeason, startDate, endDate));
                     model.fireTableDataChanged();
                 } catch (SearchAccessException searchAccessException) {
-                    searchAccessException.printStackTrace();
+                    ExceptionHandler.exitAfterUnhandledException(searchAccessException);
                 }
             }
             else {

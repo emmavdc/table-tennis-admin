@@ -4,6 +4,7 @@ import controllerPackage.AbsenceController;
 import exceptionPackage.AbsenceAccessException;
 import exceptionPackage.AffiliateAccessException;
 import utils.Constants;
+import utils.ExceptionHandler;
 import utils.Formating;
 
 import javax.swing.*;
@@ -27,7 +28,7 @@ public class AbsenteeismRatePanel extends JPanel {
     private int lastYear, currentYear;
 
 
-    public AbsenteeismRatePanel(MainWindow parent){
+    public AbsenteeismRatePanel(MainWindow parent) throws AffiliateAccessException, AbsenceAccessException {
 
         setLayout(new BorderLayout());
         this.parent = parent;
@@ -35,14 +36,8 @@ public class AbsenteeismRatePanel extends JPanel {
         averagePerWeek = new double[22];
         averageSeason = 0;
 
-        try {
-            averagePerWeek =  controller.absenteeismRateWeek();
-            averageSeason = controller.averageAbsenteeismRate();
-        } catch (AbsenceAccessException e) {
-            e.printStackTrace();
-        } catch (AffiliateAccessException affiliateAccessException) {
-            affiliateAccessException.printStackTrace();
-        }
+        averagePerWeek =  controller.absenteeismRateWeek();
+        averageSeason = controller.averageAbsenteeismRate();
 
         // ----- TOP ----- //
 
@@ -184,12 +179,9 @@ public class AbsenteeismRatePanel extends JPanel {
         try {
             this.averagePerWeek =  controller.absenteeismRateWeek();
             averageSeason = controller.averageAbsenteeismRate();
-        } catch (AbsenceAccessException e) {
-            e.printStackTrace();
-        } catch (AffiliateAccessException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            ExceptionHandler.exitAfterUnhandledException(e);
         }
-
         averageSeasonLabel.setText("     Average season : " + String.valueOf(averageSeason) + " %");
         week1Label.setText("     Week 1 : " + String.valueOf(averagePerWeek[0] + " %"));
         week2Label.setText("     Week 2 : " + String.valueOf(averagePerWeek[1] + " %"));

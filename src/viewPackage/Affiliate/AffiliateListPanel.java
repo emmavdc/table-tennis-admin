@@ -3,6 +3,7 @@ package viewPackage.Affiliate;
 import controllerPackage.AffiliateController;
 import exceptionPackage.AffiliateAccessException;
 import modelPackage.AllAffiliatesModel;
+import utils.ExceptionHandler;
 
 import javax.swing.*;
 import javax.swing.table.TableColumn;
@@ -15,8 +16,6 @@ public class AffiliateListPanel extends JPanel {
     private AllAffiliatesModel model;
     private JTable table;
     private JScrollPane scrollPane;
-    private JPanel centerPanel, buttonPanel, tablePanel;
-    private JButton closeButton;
 
 
 
@@ -41,7 +40,7 @@ public class AffiliateListPanel extends JPanel {
 
         }
         catch (AffiliateAccessException e){
-            JOptionPane.showMessageDialog(null, e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+            ExceptionHandler.exitAfterUnhandledException(e);
         }
 
     }

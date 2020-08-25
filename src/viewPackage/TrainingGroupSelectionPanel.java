@@ -6,6 +6,7 @@ import exceptionPackage.SearchAccessException;
 import exceptionPackage.TrainingAccessException;
 import modelPackage.*;
 import utils.Constants;
+import utils.ExceptionHandler;
 import utils.Formating;
 
 import javax.swing.*;
@@ -68,7 +69,7 @@ public class TrainingGroupSelectionPanel extends JPanel {
             trainingGroupComboBox.setMaximumRowCount(5);
             comboPanel.add(trainingGroupComboBox);
         } catch (TrainingAccessException e) {
-            e.printStackTrace();
+            ExceptionHandler.exitAfterUnhandledException(e);
         }
 
         trainingGroupValidationLabel = new JLabel(Constants.EMPTY_STRING);
@@ -159,7 +160,7 @@ public class TrainingGroupSelectionPanel extends JPanel {
                     model.setContents(searchesController.getAllAffiliatesInTraining(trainingGroup.getTrainingGroupID(),currentSeason));
                     model.fireTableDataChanged();
                 } catch (SearchAccessException searchAccessException) {
-                    searchAccessException.printStackTrace();
+                    ExceptionHandler.exitAfterUnhandledException(searchAccessException);
                 }
             }
         }

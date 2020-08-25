@@ -6,6 +6,7 @@ import exceptionPackage.RankingAccessException;
 import exceptionPackage.SearchAccessException;
 import modelPackage.*;
 import utils.Constants;
+import utils.ExceptionHandler;
 import utils.Formating;
 
 import javax.swing.*;
@@ -72,7 +73,7 @@ public class AvailableWeekPanel extends JPanel {
             rankingComboBox.setMaximumRowCount(5);
             comboPanel.add(rankingComboBox);
         } catch (RankingAccessException e) {
-            e.printStackTrace();
+            ExceptionHandler.exitAfterUnhandledException(e);
         }
 
         rankingValidationLabel = new JLabel(Constants.EMPTY_STRING);
@@ -184,6 +185,7 @@ public class AvailableWeekPanel extends JPanel {
                     model.fireTableDataChanged();
                 }
                 catch (SearchAccessException s){
+                    ExceptionHandler.exitAfterUnhandledException(s);
                 }
             }
             else{

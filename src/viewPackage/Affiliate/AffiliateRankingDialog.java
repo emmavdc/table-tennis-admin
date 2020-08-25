@@ -3,6 +3,7 @@ package viewPackage.Affiliate;
 import controllerPackage.RankingController;
 import exceptionPackage.RankingAccessException;
 import modelPackage.*;
+import utils.ExceptionHandler;
 import utils.Formating;
 
 import javax.swing.*;
@@ -123,7 +124,7 @@ public class AffiliateRankingDialog extends JDialog {
                     refreshAffiliateData();
 
                 } catch (RankingAccessException rankingAccessException) {
-                    rankingAccessException.printStackTrace();
+                    ExceptionHandler.exitAfterUnhandledException(rankingAccessException);
                 }
 
             } else {
@@ -136,7 +137,7 @@ public class AffiliateRankingDialog extends JDialog {
                     rankingController.updateAffiliateRanking(updateAffiliateRanking);
                     refreshAffiliateData();
                 } catch (RankingAccessException rankingAccessException) {
-                    rankingAccessException.printStackTrace();
+                    ExceptionHandler.exitAfterUnhandledException(rankingAccessException);
                 }
 
             }
@@ -163,7 +164,7 @@ public class AffiliateRankingDialog extends JDialog {
                     rankingController.deleteAffiliateRanking(affiliateRankingId);
                     refreshAffiliateData();
                 } catch (RankingAccessException rankingAccessException) {
-                    rankingAccessException.printStackTrace();
+                   ExceptionHandler.exitAfterUnhandledException(rankingAccessException);
                 }
             }
         }

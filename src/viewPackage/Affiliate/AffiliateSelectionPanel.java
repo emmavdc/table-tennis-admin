@@ -1,10 +1,9 @@
 package viewPackage.Affiliate;
 
 import controllerPackage.AffiliateController;
-import exceptionPackage.AbsenceAccessException;
 import exceptionPackage.AffiliateAccessException;
-import exceptionPackage.RankingAccessException;
 import modelPackage.Affiliate;
+import utils.ExceptionHandler;
 import viewPackage.MainWindow;
 
 import javax.swing.*;
@@ -58,7 +57,7 @@ public class AffiliateSelectionPanel extends JPanel {
             AffiliateComboBoxModel affiliateComboBoxModel = new AffiliateComboBoxModel(controller.getAllAffiliates().toArray(new Affiliate[0]));
             affiliateComboBox.setModel(affiliateComboBoxModel);
         } catch (AffiliateAccessException e) {
-            e.printStackTrace();
+           ExceptionHandler.exitAfterUnhandledException(e);
         }
     }
 
@@ -69,12 +68,8 @@ public class AffiliateSelectionPanel extends JPanel {
             try {
 
                 parent.setAffiliate((Affiliate)affiliateComboBox.getSelectedItem());
-            } catch (AffiliateAccessException affiliateAccessException) {
-                affiliateAccessException.printStackTrace();
-            } catch (RankingAccessException rankingAccessException) {
-                rankingAccessException.printStackTrace();
-            } catch (AbsenceAccessException absenceAccessException) {
-                absenceAccessException.printStackTrace();
+            } catch (Exception exception) {
+                ExceptionHandler.exitAfterUnhandledException(exception);
             }
         }
     }
@@ -85,14 +80,9 @@ public class AffiliateSelectionPanel extends JPanel {
 
             try {
                 parent.setAffiliate((Affiliate)affiliateComboBox.getSelectedItem());
-            } catch (AffiliateAccessException affiliateAccessException) {
-                affiliateAccessException.printStackTrace();
-            } catch (RankingAccessException rankingAccessException) {
-                rankingAccessException.printStackTrace();
-            } catch (AbsenceAccessException absenceAccessException) {
-                absenceAccessException.printStackTrace();
+            } catch (Exception exception) {
+                ExceptionHandler.exitAfterUnhandledException(exception);
             }
-
         }
     }
 

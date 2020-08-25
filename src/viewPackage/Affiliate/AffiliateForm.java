@@ -5,6 +5,7 @@ import exceptionPackage.*;
 import modelPackage.Affiliate;
 import modelPackage.ValidationResult;
 import utils.Constants;
+import utils.ExceptionHandler;
 import viewPackage.MainWindow;
 
 import javax.swing.*;
@@ -90,12 +91,8 @@ public class AffiliateForm extends JPanel {
                     affiliatePanel.setValidationResult(validationResults);
                 }
             }
-        } catch (AffiliateAccessException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }  catch (AbsenceAccessException e) {
-            e.printStackTrace();
-        } catch (RankingAccessException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            ExceptionHandler.exitAfterUnhandledException(e);
         }
 
     }
@@ -107,7 +104,7 @@ public class AffiliateForm extends JPanel {
             JOptionPane.showMessageDialog(null, "The Affiliate is " + "deleted!", "Affiliate management", JOptionPane.INFORMATION_MESSAGE);
             parent.closeCurrentForm();
         } catch (AffiliateAccessException affiliateAccessException) {
-            affiliateAccessException.printStackTrace();
+           ExceptionHandler.exitAfterUnhandledException(affiliateAccessException);
         }
     }
 
@@ -134,11 +131,6 @@ public class AffiliateForm extends JPanel {
 
     public void closeAbsenceDialog(){
         absenceDialog.setVisible(false);
-    }
-
-    public void toggleSaveButton(boolean enable)
-    {
-        this.affiliateButtonsPanel.toggleSaveButton(enable);
     }
 
 }

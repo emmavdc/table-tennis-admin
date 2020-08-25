@@ -3,6 +3,7 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionPackage.*;
 import modelPackage.Affiliate;
+import utils.ExceptionHandler;
 import viewPackage.Affiliate.*;
 
 import javax.swing.*;
@@ -32,7 +33,7 @@ public class MainWindow extends JFrame {
     private AffiliateFormMode affiliateFormMode;
 
 
-    public MainWindow() throws EquipmentAccessException, AffiliateAccessException, TrainingAccessException {
+    public MainWindow() throws EquipmentAccessException, AffiliateAccessException, TrainingAccessException, AbsenceAccessException {
         //Configure
         super("Table Tennis Club Administration");
         setSize(1024, 768);
@@ -128,20 +129,7 @@ public class MainWindow extends JFrame {
             mainWindow.setVisible(true);
         }
         catch (Exception e){
-            // information for programmer
-            e.printStackTrace();
-
-            // information from dialog box for user
-            ExceptionDialog exceptionDialog = new ExceptionDialog();
-            exceptionDialog.setVisible(true);
-
-            ApplicationController applicationController = new ApplicationController();
-            try {
-                applicationController.closingApplication();
-            } catch (CloseApplicationException exception) {
-                exception.printStackTrace();
-            }
-            System.exit(0);
+            ExceptionHandler.exitAfterUnhandledException(e);
         }
     }
 
