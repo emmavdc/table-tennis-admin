@@ -19,7 +19,10 @@ CREATE TABLE `affiliate` (
   PRIMARY KEY (`affiliate_id`),
   KEY `equipment_id_idx` (`equipment_id`),
   CONSTRAINT `equipment_id` FOREIGN KEY (`equipment_id`) REFERENCES `equipment` (`reference`),
-  CONSTRAINT chk_date CHECK(birth_date > '1899-12-31' AND birth_date < sysdate())
+  CONSTRAINT chk_date CHECK(birth_date > '1899-12-31' AND birth_date < sysdate()),
+  CONSTRAINT chk_phone CHECK(phone != ''),
+  CONSTRAINT chk_email CHECK(email != ''),
+  CONSTRAINT chk_gender CHECK(gender = 'M' or gender = 'W')
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `absence` (
