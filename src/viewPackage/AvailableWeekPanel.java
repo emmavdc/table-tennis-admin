@@ -148,8 +148,8 @@ public class AvailableWeekPanel extends JPanel {
         this.lastYear  = c.get(Calendar.YEAR)-1;
         this.currentYear = c.get(Calendar.YEAR);
 
-        // new table tennis season begins in SEPTEMBER !
-        if(currentMonth >= Calendar.SEPTEMBER){
+        // new table tennis season begins in OCTOBER !
+        if(currentMonth >= Calendar.OCTOBER){
             this.lastYear = this.currentYear;
             this.currentYear++;
         }
@@ -176,8 +176,8 @@ public class AvailableWeekPanel extends JPanel {
                 int currentYear = c.get(Calendar.YEAR);
                 int currentMonth = c.get(Calendar.MONTH);
                 int currentSeason;
-                // new table tennis season begins in SEPTEMBER !
-                if (currentMonth < Calendar.SEPTEMBER) currentSeason = currentYear - 1;
+                // new table tennis season begins in OCTOBER !
+                if (currentMonth < Calendar.OCTOBER) currentSeason = currentYear - 1;
                 else currentSeason = currentYear;
 
                 try{
