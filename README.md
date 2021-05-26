@@ -34,11 +34,11 @@ Tool is developed in Java with the Swing library.
 ![image](https://user-images.githubusercontent.com/61458773/118005707-e8d29a00-b34a-11eb-8e93-9026c504ab8f.png)
 
 
-### List of members
+### List of member
 ![image](https://user-images.githubusercontent.com/61458773/118005968-26372780-b34b-11eb-83ae-e7dfc1e7cac2.png)
 
 
-### Perform several searches
+### Perform several Searches
 ![image](https://user-images.githubusercontent.com/61458773/118006372-8037ed00-b34b-11eb-8de7-1c2d243bc9bd.png)
 #### example member according a training group
 ![image](https://user-images.githubusercontent.com/61458773/118006587-abbad780-b34b-11eb-9190-762ed0b1a590.png)
